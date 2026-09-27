@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿A qué puedo ingresar? — Universidad del Quindío</title>
+<meta name="description" content="Calcula tu puntaje ponderado del ICFES para los programas de la Universidad del Quindío y compara con los cierres oficiales.">
+<style>
+:root{
+  --bone:#FBFAF7; --bone2:#F4F1EA; --ink:#211E1B; --soft:#6B675F; --hair:#E5E1D8;
+  --green:#2F5D46; --green-soft:#EDF3EC; --green-tx:#346538;
+  --amber-soft:#FBF3DB; --amber-tx:#8A5F00;
+  --red-soft:#FDEBEC; --red-tx:#9F2F2D;
+  --blue-soft:#E1F3FE; --blue-tx:#1F6C9F;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Source Sans 3','Segoe UI',system-ui,-apple-system,sans-serif;
+  background:var(--bone); color:var(--ink); line-height:1.6; font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+header{
+  background:var(--green); color:#fff; padding:34px 0 30px;
+}
+header .wrap{display:flex;align-items:center;gap:18px}
+.escudo{width:64px;height:64px;border-radius:10px;background:rgba(255,255,255,.14);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;
+  color:rgba(255,255,255,.75);text-align:center;line-height:1.25;border:1px dashed rgba(255,255,255,.35)}
+h1{font-family:Georgia,'Times New Roman',serif;font-weight:600;font-size:clamp(24px,5vw,34px);line-height:1.12;letter-spacing:-.01em}
+header p{opacity:.85;font-size:14.5px;margin-top:6px}
+main{padding:36px 0 20px}
+.card{background:#fff;border:1px solid var(--hair);border-radius:10px;padding:26px;margin-bottom:18px}
+.lead{font-family:Georgia,serif;font-size:17.5px;line-height:1.55;color:var(--ink)}
+.hint{font-size:14px;color:var(--soft);margin-top:8px}
+label{display:block;font-weight:600;font-size:13.5px;letter-spacing:.02em;margin:14px 0 5px;color:var(--ink)}
+label small{font-weight:400;color:var(--soft)}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+input[type=number]{
+  width:100%;padding:12px 13px;font-size:19px;font-family:inherit;border:1px solid var(--hair);
+  border-radius:8px;background:var(--bone);color:var(--ink);outline:none;transition:border-color .15s;
+}
+input[type=number]:focus{border-color:var(--green)}
+input[type=number]::placeholder{color:#C9C5BB}
+button{
+  background:var(--ink);color:#fff;border:none;border-radius:6px;padding:14px 26px;
+  font-family:inherit;font-size:15.5px;font-weight:600;cursor:pointer;transition:background .15s, transform .1s;
+}
+button:hover{background:#3a3733}
+button:active{transform:scale(.98)}
+.note{background:var(--green-soft);border-radius:8px;padding:14px 16px;font-size:14px;color:var(--ink);margin-top:16px}
+.note b{color:var(--green-tx)}
+#resultados{display:none}
+.resumen{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 6px}
+.chip{border-radius:999px;padding:7px 15px;font-size:13.5px;font-weight:600}
+.chip.g{background:var(--green-soft);color:var(--green-tx)}
+.chip.y{background:var(--amber-soft);color:var(--amber-tx)}
+.chip.r{background:var(--red-soft);color:var(--red-tx)}
+.filtros{display:flex;gap:8px;margin:16px 0;flex-wrap:wrap}
+.fbtn{border:1px solid var(--hair);background:#fff;color:var(--soft);border-radius:999px;padding:7px 15px;
+  font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.fbtn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.prog{border:1px solid var(--hair);border-radius:10px;background:#fff;margin-bottom:10px;overflow:hidden}
+.prog-head{display:flex;align-items:center;gap:12px;padding:15px 18px;cursor:pointer}
+.dot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+.dot.g{background:#3E8E5A}.dot.y{background:#D9A400}.dot.r{background:#C05B5B}
+.pname{font-weight:600;font-size:15.5px;flex:1}
+.pscore{text-align:right;flex-shrink:0}
+.pscore b{font-size:17px}
+.pscore span{display:block;font-size:11.5px;color:var(--soft);line-height:1.3}
+.caret{color:var(--soft);font-size:12px;transition:transform .2s;flex-shrink:0}
+.prog.open .caret{transform:rotate(180deg)}
+.prog-body{display:none;border-top:1px solid var(--hair);padding:16px 18px;background:var(--bone)}
+.prog.open .prog-body{display:block}
+.mini{font-size:12.5px;color:var(--soft);margin-bottom:10px}
+.historia{display:flex;gap:6px;align-items:flex-end;height:74px;margin:8px 0 4px}
+.hbar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%}
+.hbar i{display:block;width:100%;max-width:44px;background:var(--green);border-radius:3px 3px 0 0;opacity:.85}
+.hbar.na i{background:repeating-linear-gradient(45deg,var(--hair),var(--hair) 3px,transparent 3px,transparent 6px)}
+.hbar span{font-size:10.5px;color:var(--soft)}
+.hbar.na span{opacity:.5}
+.mi{font-size:11.5px;color:var(--soft);text-align:center;margin-top:2px}
+.veredicto{margin-top:10px;font-size:14px;padding:10px 13px;border-radius:7px}
+.veredicto.g{background:var(--green-soft);color:var(--green-tx)}
+.veredicto.y{background:var(--amber-soft);color:var(--amber-tx)}
+.veredicto.r{background:var(--red-soft);color:var(--red-tx)}
+.aviso{background:var(--amber-soft);border-radius:8px;padding:13px 16px;font-size:13.5px;margin:16px 0}
+.aviso b{color:var(--amber-tx)}
+footer{border-top:1px solid var(--hair);margin-top:34px;padding:26px 0 34px;font-size:13.5px;color:var(--soft)}
+footer .escudo2{width:58px;height:58px;border-radius:9px;background:var(--bone2);border:1px dashed #CFC9BC;
+  display:flex;align-items:center;justify-content:center;font-size:10px;color:#A39D90;text-align:center;line-height:1.2;margin-bottom:12px}
+footer b{color:var(--ink)}
+@media(max-width:560px){
+  header .wrap{flex-direction:column;text-align:center;gap:10px}
+  .prog-head{padding:13px 14px;gap:9px}
+  .pscore b{font-size:15.5px}
+  .card{padding:20px 16px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="escudo">ESCUDO<br>AQUÍ</div>
+    <div>
+      <h1>¿A qué puedo ingresar en la Universidad del Quindío?</h1>
+      <p>Ingresa tus puntajes del ICFES y descubre, con los ponderados oficiales, a qué programas podrías calificar.</p>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="card">
+    <p class="lead">Escribe tus resultados por área del examen Saber 11 (cada área va de 0 a 100, aparecen así en tu reporte del ICFES).</p>
+    <div class="inputs">
+      <div><label>Lectura crítica</label><input type="number" id="lc" min="0" max="100" step="0.1" placeholder="0–100"></div>
+      <div><label>Matemáticas</label><input type="number" id="mat" min="0" max="100" step="0.1" placeholder="0–100"></div>
+      <div><label>Sociales y ciudadanas</label><input type="number" id="soc" min="0" max="100" step="0.1" placeholder="0–100"></div>
+      <div><label>Ciencias naturales</label><input type="number" id="nat" min="0" max="100" step="0.1" placeholder="0–100"></div>
+      <div><label>Inglés</label><input type="number" id="ing" min="0" max="0" max="100" step="0.1" placeholder="0–100"></div>
+    </div>
+    <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <button id="calc">Calcular mis opciones</button>
+      <button id="reset" style="background:#fff;color:var(--ink);border:1px solid var(--hair)">Limpiar</button>
+    </div>
+    <div class="note" style="display:none" id="err"></div>
+  </div>
+
+  <div id="resultados">
+    <div class="card" style="padding:22px">
+      <p class="lead">Estos son tus resultados para el <b>último periodo con cierre publicado: 2026-2</b>.</p>
+      <div class="resumen" id="resumen"></div>
+      <div class="filtros" id="filtros"></div>
+      <p class="hint">Toca cualquier programa para ver su histórico 2024-2 → 2026-2 y el detalle del cálculo.</p>
+    </div>
+    <div id="lista"></div>
+
+    <div class="aviso">
+      <b>Importante:</b> esta herramienta es orientativa. Los puntajes de cierre son el resultado del último admitido
+      de cada periodo (documentos oficiales de la Oficina de Admisiones y Registros, Acuerdo 159 de 2023) y cambian
+      cada convocatoria según quién se inscriba y los cupos. <b>No garantizan el ingreso.</b> La decisión de admisión
+      es exclusiva de la Universidad del Quindío.
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="escudo2">ESCUDO<br>AQUÍ</div>
+    <p><b>I. E. Santa Teresa de Jesús</b> — Área de Ciencias Sociales</p>
+    <p>Calculadora orientativa · ponderaciones oficiales de la Uniquindío (Res. ICFES 470/2017) y cierres 2024-2 → 2026-2 (Acuerdo 159/2023).</p>
+    <p style="margin-top:10px">By Camilo Moreno</p>
+  </div>
+</footer>
+
+<script>
+const DATA = [
+{"n":"Administración Financiera","f":"Ciencias Económicas, Administrativas y Contables","j":"Distancia · CAT Armenia","p":[0.25,0.247,0.205,0.153,0.145],"c":[38.881,38.529,37.689,38.383,35.833],"cat":1},
+{"n":"Administración de Negocios","f":"Ciencias Económicas, Administrativas y Contables","j":"","p":[0.3,0.2,0.2,0.15,0.15],"c":[54.0,62.85,57.3,60.4,56.95],"cat":0},
+{"n":"Artes Visuales","f":"Ciencias Humanas y Bellas Artes","j":"","p":[0.4,0.1,0.2,0.2,0.1],"c":[60.4,61.8,62.3,64.6,59.5],"cat":0},
+{"n":"Biología","f":"Ciencias Básicas y Tecnologías","j":"","p":[0.2,0.15,0.16,0.34,0.15],"c":[38.93,61.62,42.68,60.64,37.77],"cat":0},
+{"n":"Comunicación Social - Periodismo","f":"Ciencias Humanas y Bellas Artes","j":"","p":[0.3,0.15,0.27,0.08,0.2],"c":[58.55,63.32,57.49,63.22,58.75],"cat":0},
+{"n":"Contaduría Pública","f":"Ciencias Económicas, Administrativas y Contables","j":"Diurna","p":[0.33,0.22,0.19,0.07,0.19],"c":[57.12,62.31,56.87,63.96,41.63],"cat":0},
+{"n":"Contaduría Pública","f":"Ciencias Económicas, Administrativas y Contables","j":"Nocturna","p":[0.33,0.22,0.19,0.07,0.19],"c":[53.66,35.77,33.64,55.09,42.09],"cat":0},
+{"n":"Economía","f":"Ciencias Económicas, Administrativas y Contables","j":"Diurna","p":[0.2,0.3,0.3,0.1,0.1],"c":[32.2,41.1,48.2,64.4,43.7],"cat":0},
+{"n":"Economía","f":"Ciencias Económicas, Administrativas y Contables","j":"Nocturna","p":[0.2,0.3,0.3,0.1,0.1],"c":[35.1,35.9,null,34.5,null],"cat":0},
+{"n":"Enfermería","f":"Ciencias de la Salud","j":"","p":[0.175,0.175,0.25,0.25,0.15],"c":[null,71.075,null,75.25,null],"cat":0},
+{"n":"Filosofía","f":"Ciencias Humanas y Bellas Artes","j":"","p":[0.45,0.1,0.2,0.15,0.1],"c":[null,45.95,null,36.7,null],"cat":0},
+{"n":"Física","f":"Ciencias Básicas y Tecnologías","j":"","p":[0.25,0.25,0.15,0.2,0.15],"c":[null,54.8,null,51.05,null],"cat":0},
+{"n":"Gerontología","f":"Ciencias de la Salud","j":"","p":[0.2714,0.1357,0.22145,0.22145,0.15],"c":[43.057,38.843,null,30.772,null],"cat":0},
+{"n":"Ingeniería Civil","f":"Ingeniería","j":"","p":[0.2,0.35,0.15,0.2,0.1],"c":[64.3,68.5,60.45,68.65,45.6],"cat":0},
+{"n":"Ingeniería Electrónica","f":"Ingeniería","j":"","p":[0.2,0.35,0.1,0.25,0.1],"c":[34.2,64.95,53.75,65.1,42.3],"cat":0},
+{"n":"Ingeniería Topográfica y Geomática","f":"Ingeniería","j":"","p":[0.2,0.35,0.15,0.2,0.1],"c":[42.85,41.4,54.15,36.35,44.95],"cat":0},
+{"n":"Ingeniería de Alimentos","f":"Ciencias Agroindustriales","j":"Diurna","p":[0.15,0.3,0.1,0.35,0.1],"c":[45.2,22.722,46.35,39.3,32.2],"cat":0},
+{"n":"Ingeniería de Alimentos","f":"Ciencias Agroindustriales","j":"Nocturna","p":[0.15,0.3,0.1,0.35,0.1],"c":[37.65,43.55,null,43.65,null],"cat":0},
+{"n":"Ingeniería de Sistemas y Computación","f":"Ingeniería","j":"Diurna","p":[0.2,0.35,0.2,0.15,0.1],"c":[67.9,72.25,67.95,74.4,68.7],"cat":0},
+{"n":"Ingeniería de Sistemas y Computación","f":"Ingeniería","j":"Nocturna","p":[0.2,0.35,0.2,0.15,0.1],"c":[64.4,63.95,64.45,63.95,65.85],"cat":0},
+{"n":"Licenciatura en Ciencias Naturales y Educación Ambiental","f":"Ciencias de la Educación","j":"","p":[0.2,0.15,0.2,0.3,0.15],"c":[39.85,42.75,null,51.6,null],"cat":0},
+{"n":"Licenciatura en Educación Física, Recreación y Deportes","f":"Ciencias de la Educación","j":"Diurna","p":[0.3,0.1,0.3,0.1,0.2],"c":[52.6,55.2,31.2,53.3,29.4],"cat":0},
+{"n":"Licenciatura en Educación Física, Recreación y Deportes","f":"Ciencias de la Educación","j":"Nocturna","p":[0.3,0.1,0.3,0.1,0.2],"c":[null,50.7,50.8,53.0,46.9],"cat":0},
+{"n":"Licenciatura en Educación Infantil","f":"Ciencias de la Educación","j":"Diurna","p":[0.15,0.08,0.7,0.0,0.07],"c":[49.05,27.27,49.02,58.03,50.67],"cat":0},
+{"n":"Licenciatura en Educación Infantil","f":"Ciencias de la Educación","j":"Nocturna","p":[0.15,0.08,0.7,0.0,0.07],"c":[33.32,30.161,41.96,34.24,30.77],"cat":0},
+{"n":"Licenciatura en Lenguas Modernas con Énfasis en Inglés y Francés","f":"Ciencias de la Educación","j":"Diurna","p":[0.3,0.1,0.2,0.1,0.3],"c":[65.5,67.6,63.2,68.6,64.7],"cat":0},
+{"n":"Licenciatura en Lenguas Modernas con Énfasis en Inglés y Francés","f":"Ciencias de la Educación","j":"Nocturna","p":[0.3,0.1,0.2,0.1,0.3],"c":[62.1,62.1,61.0,60.8,59.7],"cat":0},
+{"n":"Licenciatura en Literatura y Lengua Castellana","f":"Ciencias de la Educación","j":"","p":[0.4,0.1,0.2,0.1,0.2],"c":[48.1,40.5,null,41.7,null],"cat":0},
+{"n":"Licenciatura en Matemáticas","f":"Ciencias de la Educación","j":"","p":[0.2,0.4,0.15,0.1,0.15],"c":[41.8,42.65,null,34.1,null],"cat":0},
+{"n":"Medicina","f":"Ciencias de la Salud","j":"","p":[0.2,0.15,0.2,0.3,0.15],"c":[null,87.15,null,91.2,null],"cat":0},
+{"n":"Química","f":"Ciencias Básicas y Tecnologías","j":"","p":[0.15,0.15,0.1,0.5,0.1],"c":[47.35,37.45,55.45,46.55,49.75],"cat":0},
+{"n":"Seguridad y Salud en el Trabajo","f":"Ciencias de la Salud","j":"Distancia · CAT Armenia","p":[0.3,0.2,0.15,0.2,0.15],"c":[35.25,36.15,36.9,34.4,32.45],"cat":1},
+{"n":"Tecnología en Instrumentación Electrónica","f":"Ciencias Básicas y Tecnologías","j":"Diurna","p":[0.15,0.35,0.1,0.15,0.25],"c":[null,40.65,null,26.6,null],"cat":0},
+{"n":"Tecnología en Instrumentación Electrónica","f":"Ciencias Básicas y Tecnologías","j":"Nocturna","p":[0.15,0.35,0.1,0.15,0.25],"c":[39.5,null,46.15,null,37.75],"cat":0},
+{"n":"Tecnología en Obras Civiles","f":"Ingeniería","j":"Distancia · CAT Armenia","p":[0.2,0.35,0.15,0.2,0.1],"c":[37.55,38.05,null,null,null],"cat":1},
+{"n":"Trabajo Social","f":"Ciencias Humanas y Bellas Artes","j":"","p":[0.25,0.1,0.25,0.2,0.2],"c":[52.05,58.65,38.6,52.8,39.75],"cat":0},
+{"n":"Zootecnia","f":"Ciencias Agroindustriales","j":"","p":[0.2,0.15,0.2,0.35,0.1],"c":[54.45,59.7,57.9,59.7,56.7],"cat":0}
+];
+const PER = ["2024-2","2025-1","2025-2","2026-1","2026-2"];
+const LAST = "2026-2";
+const LASTI = PER.indexOf(LAST);
+const AREAS = ["Lectura crítica","Matemáticas","Sociales y ciudadanas","Ciencias naturales","Inglés"];
+const TL = 3; // banda "al límite": hasta 3 puntos por debajo del cierre
+
+let filt = "todos";
+let lastScores = null;
+
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const fmt = v => v == null ? "—" : v.toFixed(2).replace(".", ",");
+const llave = t => t.n + "|" + (t.j || "");
+
+function calcular(s){
+  return DATA.map(t => {
+    let cRef = null, refP = null;
+    for (let i = LASTI; i >= 0; i--){ if (t.c[i] != null){ cRef = t.c[i]; refP = PER[i]; break; } }
+    return {...t, score: t.p.reduce((a,w,i)=>a + w*s[i], 0), cRef, refP};
+  });
+}
+
+function estado(t){
+  if (t.cRef == null) return "sindato";
+  if (t.score >= t.cRef) return "g";
+  if (t.score >= t.cRef - TL) return "y";
+  return "r";
+}
+
+function refPeriodo(t){ return t.c[LASTI] != null ? LAST : PER[4 - [...t.c].reverse().findIndex(v=>v!=null)]; }
+
+function detalle(t){
+  const parts = [];
+  for (let i=0;i<5;i++){
+    const w = Math.round(t.p[i]*1000)/10;
+    if (w > 0) parts.push(AREAS[i] + " " + String(w).replace(".",",") + "%");
+  }
+  return parts.join(" · ");
+}
+
+function render(){
+  const r = calcular(lastScores);
+  const counts = {g:0,y:0,r:0,sd:0};
+  r.forEach(t => counts[estado(t)] === undefined ? counts.sd++ : counts[estado(t)]++);
+  // resumen
+  $("resumen").innerHTML =
+    '<span class="chip g">✓ ' + counts.g + ' con margen</span>' +
+    '<span class="chip y">≈ ' + counts.y + ' al límite</span>' +
+    '<span class="chip r">✕ ' + counts.r + ' por debajo</span>' +
+    (counts.sd ? '<span class="chip" style="background:var(--bone2);color:var(--soft)">• ' + counts.sd + ' sin dato</span>' : '');
+  // filtros
+  const fb = [
+    ["todos","Todos (" + r.length + ")"],
+    ["g","Con margen (" + counts.g + ")"],
+    ["y","Al límite (" + counts.y + ")"],
+    ["r","Por debajo (" + counts.r + ")"],
+  ];
+  if (counts.sd) fb.push(["sindato","Sin dato (" + counts.sd + ")"]);
+  $("filtros").innerHTML = fb.map(f =>
+    '<button class="fbtn' + (filt===f[0]?" on":"") + '" data-f="' + f[0] + '">' + f[1] + '</button>').join("");
+  // lista
+  let out = [];
+  const orden = {g:0, y:1, sindato:2, r:3};
+  [...r].sort((a,b)=>{
+    const ea=estado(a), eb=estado(b);
+    if (orden[ea]!==orden[eb]) return orden[ea]-orden[eb];
+    return b.score - a.score;
+  }).forEach(t=>{
+    const e = estado(t);
+    if (filt !== "todos" && filt !== e) return;
+    const ref = t.refP || "—";
+    const delta = t.cRef == null ? null : t.score - t.cRef;
+    let head = '<div class="prog" data-k="' + esc(llave(t)) + '">' +
+      '<div class="prog-head"><span class="dot ' + (e==="sindato"?"y":e) + '"></span>' +
+      '<div class="pname">' + esc(t.n) + (t.j ? ' <small style="color:var(--soft);font-weight:400">· ' + esc(t.j) + '</small>' : '') + '</div>' +
+      '<div class="pscore"><b>' + t.score.toFixed(2).replace(".",",") + '</b>' +
+      '<span>' + (t.cRef==null ? "sin cierre" : "cierre " + fmt(t.cRef) + " · " + ref) + '</span></div>' +
+      '<span class="caret">▼</span></div><div class="prog-body">';
+    if (t.cRef == null){
+      head += '<div class="mini">' + detalle(t) + '</div>' +
+        '<div class="veredicto y">Este programa no tuvo cierre publicado en los periodos recientes (no se ofertó o no hubo aspirantes). ' +
+        'Aun así, calcula tu puntaje con el simulador oficial y consulta con Admisiones.</div></div></div>';
+      out.push(head);
+      return;
+    }
+    // barras históricas
+    let bars = "";
+    const maxV = Math.max(...t.c.filter(v=>v!=null), t.score, 100);
+    PER.forEach((p,i)=>{
+      const v = t.c[i];
+      if (v==null){ bars += '<div class="hbar na"><i style="height:12px"></i><span>—</span><span class="mi">' + p + '</span></div>'; }
+      else{
+        const h = Math.round(v / maxV * 56);
+        bars += '<div class="hbar"><i style="height:' + h + 'px"></i><span>' + fmt(v) + '</span><span class="mi">' + p + '</span></div>';
+      }
+    });
+    // veredicto
+    let vd = "";
+    if (e==="g"){
+      vd = '<div class="veredicto g">✓ Tu puntaje (' + t.score.toFixed(2).replace(".",",") + ') supera el cierre de ' + ref +
+        ' (' + fmt(t.cRef) + ') por ' + delta.toFixed(2).replace(".",",") + ' puntos. Te colocaría por encima del último admitido.</div>';
+    } else if (e==="y"){
+      vd = '<div class="veredicto y">≈ Estás a ' + (t.cRef - t.score).toFixed(2).replace(".",",") +
+        ' puntos del cierre de ' + ref + '. Está al alcance: los cierres se mueven cada periodo según quién se inscriba.</div>';
+    } else {
+      vd = '<div class="veredicto r">✕ Te faltan ' + (t.cRef - t.score).toFixed(2).replace(".",",") +
+        ' puntos para el cierre de ' + ref + '. Considera presentarlo de nuevo o evaluar programas afines con cierres más accesibles.</div>';
+    }
+    head += '<div class="mini">' + detalle(t) + '</div>' +
+      '<div class="historia">' + bars + '</div>' +
+      '<div class="mi">Barras: puntaje de cierre de cada periodo (escala ponderada 0–100). Tus ' + t.score.toFixed(2).replace(".",",") + ' vs cierre ' + ref + '.</div>' +
+      vd + '</div></div>';
+    out.push(head);
+  });
+  $("lista").innerHTML = out.join("") || '<p class="hint" style="padding:10px 4px">No hay programas en esta categoría.</p>';
+  // listeners
+  document.querySelectorAll(".fbtn").forEach(b => b.onclick = () => { filt = b.dataset.f; render(); });
+  document.querySelectorAll(".prog-head").forEach(h => h.onclick = () => h.parentElement.classList.toggle("open"));
+}
+
+function leerInputs(){
+  const v = ["lc","mat","soc","nat","ing"].map(id => parseFloat($(id).value));
+  if (v.some(x => isNaN(x))) return null;
+  if (v.some(x => x < 0 || x > 100)) return "rango";
+  return v;
+}
+
+$("calc").onclick = () => {
+  const v = leerInputs();
+  const err = $("err");
+  if (v === null){
+    err.style.display = "block";
+    err.innerHTML = "<b>Faltan puntajes:</b> llena las cinco áreas para calcular. Si tu reporte no trae Inglés, escribe tu estimación más prudente.";
+    return;
+  }
+  if (v === "rango"){
+    err.style.display = "block";
+    err.innerHTML = "<b>Revisa los valores:</b> cada área va de 0 a 100.";
+    return;
+  }
+  err.style.display = "none";
+  lastScores = v;
+  filt = "todos";
+  $("resultados").style.display = "block";
+  render();
+  $("resultados").scrollIntoView({behavior:"smooth"});
+};
+
+$("reset").onclick = () => {
+  ["lc","mat","soc","nat","ing"].forEach(id => $(id).value = "");
+  $("resultados").style.display = "none";
+  $("err").style.display = "none";
+  lastScores = null;
+  filt = "todos";
+};
+</script>
+</body>
+</html>
