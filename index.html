@@ -760,8 +760,26 @@ IDS.forEach((id, i) => {
   inp.addEventListener("keydown", e => {
     if (e.key === "Enter"){ e.preventDefault(); i < IDS.length - 1 ? $(IDS[i+1]).focus() : $("calc").click(); }
   });
+  // la pista NO cambia el valor: solo arrastrando el pulgar (el punto). Así un toque
+  // accidental al hacer scroll no mueve el puntaje.
+  let previo = null, tomado = false;
+  rng.addEventListener("pointerdown", e => {
+    previo = rng.value;
+    const r = rng.getBoundingClientRect(), tw = 28;
+    const frac = (rng.value - +rng.min) / (+rng.max - +rng.min);
+    const centro = r.left + tw/2 + frac * (r.width - tw);
+    tomado = Math.abs(e.clientX - centro) <= tw/2 + 8;
+    if (!tomado) e.preventDefault();
+  });
+  const soltar = () => { previo = null; tomado = false; };
+  rng.addEventListener("pointerup", soltar);
+  rng.addEventListener("pointercancel", soltar);
+  window.addEventListener("pointerup", soltar);
   // palanca → número
   rng.addEventListener("input", () => {
+    if (previo !== null && !tomado){ // gesto iniciado fuera del pulgar: ignorar
+      rng.value = previo; pintarPalanca(rng, +previo); return;
+    }
     inp.value = rng.value; pintarPalanca(rng, +rng.value);
     inp.classList.remove("bad"); alCambiar();
   });
