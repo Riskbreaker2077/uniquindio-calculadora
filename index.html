@@ -74,7 +74,7 @@ button:active{transform:scale(.98)}
 .prog-head{display:flex;align-items:center;gap:12px;padding:15px 18px;cursor:pointer}
 .dot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
 .dot.g{background:#3E8E5A}.dot.y{background:#D9A400}.dot.r{background:#C05B5B}
-.pname{font-family:'Newsreader',Georgia,serif;font-weight:600;font-size:16.5px;line-height:1.25;flex:1}
+.pname{font-family:'Newsreader',Georgia,serif;font-weight:600;font-size:16.5px;line-height:1.25;flex:1;min-width:0}
 .pscore{text-align:right;flex-shrink:0}
 .pscore b{font-size:17px}
 .pscore span{display:block;font-size:11.5px;color:var(--soft);line-height:1.3}
@@ -120,8 +120,9 @@ footer b{color:var(--ink)}
 .ov-step h3{font-family:'Newsreader',Georgia,serif;font-size:20.5px;font-weight:600;margin-bottom:8px;letter-spacing:-.01em}
 .wrow{display:flex;align-items:center;gap:10px;margin:7px 0}
 .wname{width:168px;font-size:13.5px;color:var(--soft);flex-shrink:0}
-.wbar{height:14px;border-radius:3px;background:var(--green);opacity:.85}
-.wpct{font-size:12.5px;font-weight:700;color:var(--ink)}
+.wtrack{flex:1;height:14px;background:var(--bone2);border-radius:3px;overflow:hidden;min-width:0}
+.wbar{display:block;height:100%;background:var(--green);border-radius:3px}
+.wpct{font-size:12.5px;font-weight:700;color:var(--ink);width:38px;text-align:right;flex-shrink:0}
 .formula{font-family:'Newsreader',Georgia,serif;font-style:italic;font-size:16.5px;line-height:1.5;background:#fff;border:1px solid var(--hair);border-radius:8px;padding:14px 18px;margin:10px 0}
 .ejemplo{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
 .ej-card{border:1px solid var(--hair);border-radius:10px;padding:16px;background:#fff}
@@ -131,7 +132,7 @@ footer b{color:var(--ink)}
 .ej-res.g{background:var(--green-soft);color:var(--green-tx)}
 .ej-res.r{background:var(--red-soft);color:var(--red-tx)}
 .ov-cta{position:sticky;bottom:0;margin-top:28px;display:flex;flex-direction:column;gap:12px;align-items:stretch;
-  background:linear-gradient(180deg,rgba(251,250,247,0),var(--bone) 34%);padding:20px 0 6px}
+  background:linear-gradient(180deg,rgba(251,250,247,0),var(--bone) 34%);padding:20px 0 calc(6px + env(safe-area-inset-bottom))}
 .ov-cta button{background:var(--green);width:100%;padding:16px 26px;font-size:16px}
 .ov-note{font-size:12.5px;color:var(--soft)}
 .linklike{background:none;border:none;color:var(--blue-tx);font-weight:600;font-size:13.5px;text-decoration:underline;cursor:pointer;padding:4px 0;font-family:inherit}
@@ -158,11 +159,11 @@ footer b{color:var(--ink)}
     <div class="ov-step">
       <h3>1 · Cada carrera le pone "peso" distinto a tus áreas</h3>
       <p class="ov-p">Cada programa decide qué materias le importan más. Por ejemplo, así pondera <b>Comunicación Social – Periodismo</b>:</p>
-      <div class="wrow"><span class="wname">Lectura crítica</span><span class="wbar" style="width:100%"></span><span class="wpct">30%</span></div>
-      <div class="wrow"><span class="wname">Sociales y ciudadanas</span><span class="wbar" style="width:90%"></span><span class="wpct">27%</span></div>
-      <div class="wrow"><span class="wname">Inglés</span><span class="wbar" style="width:67%"></span><span class="wpct">20%</span></div>
-      <div class="wrow"><span class="wname">Matemáticas</span><span class="wbar" style="width:50%"></span><span class="wpct">15%</span></div>
-      <div class="wrow"><span class="wname">Ciencias naturales</span><span class="wbar" style="width:27%"></span><span class="wpct">8%</span></div>
+      <div class="wrow"><span class="wname">Lectura crítica</span><span class="wtrack"><span class="wbar" style="width:100%"></span></span><span class="wpct">30%</span></div>
+      <div class="wrow"><span class="wname">Sociales y ciudadanas</span><span class="wtrack"><span class="wbar" style="width:90%"></span></span><span class="wpct">27%</span></div>
+      <div class="wrow"><span class="wname">Inglés</span><span class="wtrack"><span class="wbar" style="width:67%"></span></span><span class="wpct">20%</span></div>
+      <div class="wrow"><span class="wname">Matemáticas</span><span class="wtrack"><span class="wbar" style="width:50%"></span></span><span class="wpct">15%</span></div>
+      <div class="wrow"><span class="wname">Ciencias naturales</span><span class="wtrack"><span class="wbar" style="width:27%"></span></span><span class="wpct">8%</span></div>
       <p class="ov-p" style="margin-top:10px">En Medicina, en cambio, <b>Ciencias naturales vale 30%</b> y Sociales solo 15%. Es decir: <b>el mismo examen vale distinto según lo que quieras estudiar.</b></p>
     </div>
 
