@@ -3,358 +3,485 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#2F5D46">
+<meta name="theme-color" content="#0F3D2A">
+<meta name="color-scheme" content="light">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&display=swap" rel="stylesheet">
 <title>¿A qué puedo ingresar? — Universidad del Quindío</title>
 <meta name="description" content="Calcula tu puntaje ponderado del ICFES para los programas de la Universidad del Quindío y compara con los cierres oficiales.">
 <style>
 :root{
-  --bone:#FBFAF7; --bone2:#F4F1EA; --ink:#211E1B; --soft:#6B675F; --hair:#E5E1D8;
-  --green:#2F5D46; --green-soft:#EDF3EC; --green-tx:#346538;
-  --amber-soft:#FBF3DB; --amber-tx:#8A5F00;
-  --red-soft:#FDEBEC; --red-tx:#9F2F2D;
-  --blue-soft:#E1F3FE; --blue-tx:#1F6C9F;
+  --paper:#EEF2EC; --card:#FFFFFF; --ink:#15261E; --muted:#56675E; --line:#D5DDD6;
+  --palma:#1D6B48; --palma-dk:#0F3D2A; --palma-lt:#DDEBE2;
+  --sol:#FFC629; --sol-dk:#8A6500;
+  --ok:#157A47; --ok-bg:#E1F2E7;
+  --mid:#9A6400; --mid-bg:#FFF1CC;
+  --no:#B83A2A; --no-bg:#FBE5E1;
+  --r-lg:22px; --r-md:14px; --r-sm:8px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  font-family:'Source Sans 3','Segoe UI',system-ui,-apple-system,sans-serif;
-  background:var(--bone); color:var(--ink); line-height:1.6; font-size:16px;
+  font-family:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-optical-sizing:auto;
+  background:var(--paper);color:var(--ink);line-height:1.55;font-size:16px;
   -webkit-font-smoothing:antialiased;
 }
-.wrap{max-width:880px;margin:0 auto;padding:0 20px}
-header{
-  background:
-    radial-gradient(1100px 420px at 88% -30%, rgba(255,255,255,.10), transparent 62%),
-    radial-gradient(700px 300px at 6% 130%, rgba(15,30,22,.28), transparent 60%),
-    var(--green);
-  color:#fff; padding:38px 0 34px; border-bottom:3px solid #24463A;
+b,strong{font-weight:650}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+:focus-visible{outline:3px solid var(--sol);outline-offset:2px;border-radius:6px}
+button{font-family:inherit;cursor:pointer}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- HERO ---------- */
+.hero{background:var(--palma-dk);color:#fff;padding:22px 0 64px;position:relative;overflow:hidden}
+.hero::after{ /* hojas de palma de cera, muy sutiles */
+  content:"";position:absolute;right:-120px;top:-80px;width:520px;height:520px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, rgba(255,198,41,.10), transparent 60%);pointer-events:none}
+.topbar{display:flex;align-items:center;gap:12px;margin-bottom:44px;position:relative;z-index:1}
+.topbar .escudo{width:44px;height:44px;border-radius:10px;background:#fff;padding:4px;flex-shrink:0}
+.topbar .escudo img{width:100%;height:100%;object-fit:contain;display:block}
+.topbar p{font-size:14px;line-height:1.3;opacity:.85}
+.topbar p b{display:block;opacity:1;color:#fff}
+.hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:start;position:relative;z-index:1}
+h1{
+  font-weight:780;font-stretch:78%;font-size:clamp(40px,6.4vw,76px);line-height:.95;letter-spacing:-.025em;
+  text-wrap:balance;margin-bottom:22px
 }
-header .wrap{display:flex;align-items:center;gap:18px}
-.escudo{width:76px;height:76px;border-radius:14px;background:#fff;padding:7px;box-shadow:0 2px 10px rgba(0,0,0,.18);flex-shrink:0}
-.escudo img{width:100%;height:100%;object-fit:contain;display:block}
-h1{font-family:'Newsreader',Georgia,'Times New Roman',serif;font-weight:500;font-size:clamp(25px,5vw,37px);line-height:1.08;letter-spacing:-.02em}
-header p{opacity:.85;font-size:14.5px;margin-top:6px}
-main{padding:36px 0 20px}
-.card{background:#fff;border:1px solid var(--hair);border-radius:10px;padding:26px;margin-bottom:18px}
-.lead{font-family:'Newsreader',Georgia,serif;font-size:18.5px;line-height:1.5;color:var(--ink)}
-.hint{font-size:14px;color:var(--soft);margin-top:8px}
-label{display:block;font-weight:600;font-size:13.5px;letter-spacing:.02em;margin:14px 0 5px;color:var(--ink)}
-label small{font-weight:400;color:var(--soft)}
-.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-input[type=number]{
-  width:100%;padding:12px 13px;font-size:19px;font-family:inherit;border:1px solid var(--hair);
-  border-radius:8px;background:var(--bone);color:var(--ink);outline:none;transition:border-color .15s;
-}
-input[type=number]:focus{border-color:var(--green)}
-input[type=number]::placeholder{color:#C9C5BB}
-button{
-  background:var(--ink);color:#fff;border:none;border-radius:6px;padding:14px 26px;
-  font-family:inherit;font-size:15.5px;font-weight:600;cursor:pointer;transition:background .15s, transform .1s;
-}
-button:hover{background:#3a3733}
-button:active{transform:scale(.98)}
-.note{background:var(--green-soft);border-radius:8px;padding:14px 16px;font-size:14px;color:var(--ink);margin-top:16px}
-.note b{color:var(--green-tx)}
-#resultados{display:none}
-.resumen{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 6px}
-.chip{border-radius:999px;padding:6px 13px;font-size:11.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
-.chip.g{background:var(--green-soft);color:var(--green-tx)}
-.chip.y{background:var(--amber-soft);color:var(--amber-tx)}
-.chip.r{background:var(--red-soft);color:var(--red-tx)}
-.filtros{display:flex;gap:8px;margin:16px 0;flex-wrap:wrap}
-.fbtn{border:1px solid var(--hair);background:#fff;color:var(--soft);border-radius:999px;padding:7px 15px;
-  font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
-.fbtn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
-.prog{border:1px solid var(--hair);border-radius:10px;background:#fff;margin-bottom:10px;overflow:hidden;transition:box-shadow .2s ease,border-color .2s ease}
-.prog:hover{box-shadow:0 2px 8px rgba(0,0,0,.04);border-color:#D9D4C7}
-.prog-head{display:flex;align-items:center;gap:12px;padding:15px 18px;cursor:pointer}
-.dot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
-.dot.g{background:#3E8E5A}.dot.y{background:#D9A400}.dot.r{background:#C05B5B}
-.pname{font-family:'Newsreader',Georgia,serif;font-weight:600;font-size:16.5px;line-height:1.25;flex:1;min-width:0}
-.pscore{text-align:right;flex-shrink:0}
-.pscore b{font-size:17px}
-.pscore span{display:block;font-size:11.5px;color:var(--soft);line-height:1.3}
-.caret{color:var(--soft);font-size:12px;transition:transform .2s;flex-shrink:0}
+.hero-copy .sub{font-size:clamp(17px,1.8vw,20px);line-height:1.5;max-width:30em;opacity:.9}
+.hero-copy .how{
+  margin-top:28px;display:inline-flex;align-items:center;gap:10px;background:none;border:1.5px solid rgba(255,255,255,.35);
+  color:#fff;border-radius:999px;padding:10px 18px;font-size:15px;font-weight:600;text-align:left;transition:border-color .15s, background .15s}
+.hero-copy .how:hover{border-color:#fff;background:rgba(255,255,255,.06)}
+.hero-copy .how span{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--sol);color:var(--palma-dk);font-weight:800;font-size:13px}
+.facts{display:flex;gap:28px;margin-top:40px;flex-wrap:wrap}
+.facts div{font-size:14px;opacity:.8;line-height:1.3}
+.facts b{display:block;font-size:30px;font-weight:750;font-stretch:85%;opacity:1;color:var(--sol);line-height:1.05}
+
+/* panel de puntajes */
+.panel{background:var(--card);color:var(--ink);border-radius:var(--r-lg);padding:28px;box-shadow:0 24px 60px -24px rgba(0,0,0,.45)}
+.panel h2{font-size:22px;font-weight:720;letter-spacing:-.01em;line-height:1.2}
+.panel .hint{font-size:14.5px;color:var(--muted);margin:6px 0 18px}
+.area{display:grid;grid-template-columns:1fr 104px;gap:6px 14px;align-items:center;padding:11px 0;border-top:1px solid var(--line)}
+.area:first-of-type{border-top:none}
+.area label{font-weight:600;font-size:16px}
+.area input{
+  width:100%;text-align:right;font-family:inherit;font-size:24px;font-weight:700;font-variant-numeric:tabular-nums;
+  padding:8px 12px;border:1.5px solid var(--line);border-radius:var(--r-sm);background:var(--paper);color:var(--ink);
+  outline:none;transition:border-color .15s, background .15s;-moz-appearance:textfield}
+.area input::-webkit-outer-spin-button,.area input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.area input:focus{border-color:var(--palma);background:#fff}
+.area input::placeholder{color:#B7C2BB;font-weight:500}
+.area input.bad{border-color:var(--no);background:var(--no-bg)}
+.meter{grid-column:1 / -1;height:5px;background:var(--palma-lt);border-radius:3px;overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--palma);border-radius:3px;transition:width .35s ease}
+.actions{display:flex;gap:10px;margin-top:20px;align-items:center;flex-wrap:wrap}
+.btn-main{
+  flex:1;min-width:200px;background:var(--sol);color:var(--palma-dk);border:none;border-radius:999px;padding:16px 24px;
+  font-size:17px;font-weight:750;transition:transform .1s, filter .15s}
+.btn-main:hover{filter:brightness(1.04)}
+.btn-main:active{transform:scale(.98)}
+.btn-ghost{background:none;border:none;color:var(--muted);font-size:15px;font-weight:600;padding:12px 10px;text-decoration:underline;text-underline-offset:3px}
+.err{display:none;margin-top:14px;background:var(--no-bg);color:var(--no);border-radius:var(--r-sm);padding:12px 14px;font-size:14.5px}
+.err b{color:var(--no)}
+
+/* ---------- RESULTADOS ---------- */
+#resultados{display:none;padding-top:56px;padding-bottom:8px}
+.sec-title{font-size:clamp(28px,4vw,42px);font-weight:760;font-stretch:82%;letter-spacing:-.02em;line-height:1.05;margin-bottom:8px;text-wrap:balance}
+.sec-sub{font-size:17px;color:var(--muted);max-width:44em}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:28px 0 14px}
+.tile{
+  text-align:left;background:var(--card);border:2px solid transparent;border-radius:var(--r-md);padding:14px 16px 12px;
+  color:var(--ink);transition:border-color .15s}
+.tile b{display:block;font-size:40px;font-weight:780;font-stretch:80%;line-height:1;font-variant-numeric:tabular-nums}
+.tile span{font-size:14.5px;font-weight:600;color:var(--muted)}
+.tile.g b{color:var(--ok)} .tile.y b{color:var(--mid)} .tile.r b{color:var(--no)}
+.tile:hover{border-color:var(--line)}
+.tile.on{border-color:var(--ink)}
+.tile.g.on{border-color:var(--ok);background:var(--ok-bg)}
+.tile.y.on{border-color:var(--mid);background:var(--mid-bg)}
+.tile.r.on{border-color:var(--no);background:var(--no-bg)}
+.toolbar{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:6px 0 14px}
+.search{position:relative;flex:1;max-width:380px;min-width:220px}
+.search input{
+  width:100%;font-family:inherit;font-size:16px;padding:12px 14px 12px 40px;border:1.5px solid var(--line);
+  border-radius:999px;background:var(--card);color:var(--ink);outline:none}
+.search input:focus{border-color:var(--palma)}
+.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.legend{display:flex;gap:18px;font-size:13.5px;color:var(--muted);flex-wrap:wrap;align-items:center}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.lg-you{width:13px;height:13px;border-radius:50%;background:var(--sol);border:2.5px solid var(--ink)}
+.lg-cut{width:3px;height:15px;background:var(--ink);border-radius:2px}
+.lg-band{width:22px;height:9px;background:var(--palma-lt);border-radius:3px;border:1px solid #BBD3C4}
+
+.lista{display:flex;flex-direction:column;gap:8px}
+.prog{background:var(--card);border-radius:var(--r-md);border-left:5px solid var(--line);overflow:hidden}
+.prog.g{border-left-color:var(--ok)} .prog.y{border-left-color:var(--sol)} .prog.r{border-left-color:var(--no)}
+.prog-head{
+  width:100%;background:none;border:none;text-align:left;color:inherit;
+  display:grid;grid-template-columns:minmax(0,1.25fr) minmax(180px,1fr) 140px 20px;gap:22px;align-items:center;padding:16px 20px}
+.pn{min-width:0}
+.pname{display:block;font-size:17.5px;font-weight:650;line-height:1.25;letter-spacing:-.005em}
+.pmeta{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;align-items:center}
+.pill{font-size:12.5px;font-weight:650;border-radius:999px;padding:2px 10px;line-height:1.6}
+.pill.j{background:var(--paper);color:var(--muted);font-weight:600}
+.pill.g{background:var(--ok-bg);color:var(--ok)}
+.pill.y{background:var(--mid-bg);color:var(--mid)}
+.pill.r{background:var(--no-bg);color:var(--no)}
+.pill.s{background:var(--paper);color:var(--muted)}
+/* regla 0–100 */
+.ruler{position:relative;height:26px;display:block}
+.r-track{position:absolute;left:0;right:0;top:50%;height:4px;margin-top:-2px;background:#E4EAE5;border-radius:2px}
+.r-tick{position:absolute;top:50%;width:1px;height:8px;margin-top:-4px;background:#C9D3CC}
+.r-band{position:absolute;top:50%;height:12px;margin-top:-6px;background:var(--palma-lt);border:1px solid #BBD3C4;border-radius:4px}
+.r-cut{position:absolute;top:2px;bottom:2px;width:3px;margin-left:-1.5px;background:var(--ink);border-radius:2px}
+.r-you{position:absolute;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:var(--sol);border:3px solid var(--ink);box-shadow:0 0 0 2px #fff}
+.pscore{text-align:right}
+.pscore b{display:block;font-size:26px;font-weight:760;font-stretch:85%;line-height:1;font-variant-numeric:tabular-nums}
+.pscore small{display:block;white-space:nowrap;font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.3}
+.caret{width:20px;height:20px;color:var(--muted);transition:transform .2s}
 .prog.open .caret{transform:rotate(180deg)}
-.prog-body{display:none;border-top:1px solid var(--hair);padding:16px 18px;background:var(--bone)}
+.prog-body{display:none;padding:4px 20px 22px 20px}
 .prog.open .prog-body{display:block}
-.mini{font-size:12.5px;color:var(--soft);margin-bottom:10px}
-.historia{display:flex;gap:6px;align-items:flex-end;height:74px;margin:8px 0 4px}
-.hbar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%}
-.hbar i{display:block;width:100%;max-width:44px;background:var(--green);border-radius:3px 3px 0 0;opacity:.85}
-.hbar.na i{background:repeating-linear-gradient(45deg,var(--hair),var(--hair) 3px,transparent 3px,transparent 6px)}
-.hbar span{font-size:10.5px;color:var(--soft)}
-.hbar.na span{opacity:.5}
-.mi{font-size:11.5px;color:var(--soft);text-align:center;margin-top:2px}
-.veredicto{margin-top:10px;font-size:14px;padding:10px 13px;border-radius:7px}
-.veredicto.g{background:var(--green-soft);color:var(--green-tx)}
-.veredicto.y{background:var(--amber-soft);color:var(--amber-tx)}
-.veredicto.r{background:var(--red-soft);color:var(--red-tx)}
-.aviso{background:var(--amber-soft);border-radius:8px;padding:13px 16px;font-size:13.5px;margin:16px 0}
-.aviso b{color:var(--amber-tx)}
-footer{border-top:1px solid var(--hair);margin-top:34px;padding:30px 0 38px;font-size:13.5px;color:var(--soft);background:linear-gradient(180deg,transparent,var(--bone2))}
-footer .escudo2{width:148px;background:#fff;padding:9px;border-radius:12px;border:1px solid var(--hair);margin-bottom:12px}
-footer .escudo2 img{width:100%;display:block}
-footer b{color:var(--ink)}
-@media(max-width:560px){
-  header .wrap{flex-direction:column;text-align:center;gap:10px}
-  .prog-head{padding:13px 14px;gap:9px}
-  .pscore b{font-size:15.5px}
-  .card{padding:20px 16px}
-}
-.reveal{opacity:0;transform:translateY(12px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
-.reveal.in{opacity:1;transform:none}
-@media (prefers-reduced-motion: reduce){.reveal{transition:none;opacity:1;transform:none}}
-/* pantalla explicación del ponderado */
-#overlay{position:fixed;inset:0;background:var(--bone);z-index:60;overflow-y:auto;display:none}
+.body-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;padding-top:16px;border-top:1px solid var(--line)}
+.body-grid h4{font-size:15px;font-weight:700;margin-bottom:10px}
+.w-row{display:grid;grid-template-columns:152px 1fr 44px 52px;gap:10px;align-items:center;font-size:14px;padding:4px 0}
+.w-row .wn{color:var(--muted)}
+.w-row .wt{height:10px;background:#E8EEE9;border-radius:3px;overflow:hidden}
+.w-row .wt i{display:block;height:100%;background:var(--palma);border-radius:3px}
+.w-row .wp{text-align:right;font-weight:650;font-variant-numeric:tabular-nums}
+.w-row .wa{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+.w-row.head{font-size:12.5px;color:var(--muted);padding-bottom:2px}
+.w-row.head span{text-align:right}
+.w-row.head span:first-child{text-align:left}
+.w-sum{display:flex;justify-content:space-between;border-top:1px dashed var(--line);margin-top:6px;padding-top:8px;font-size:14px}
+.w-sum b{font-size:18px;font-variant-numeric:tabular-nums}
+.hist{position:relative;display:flex;gap:10px;align-items:flex-end;height:132px;padding-top:18px}
+.hcol{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0}
+.hcol i{display:block;width:100%;max-width:46px;background:var(--palma);border-radius:5px 5px 0 0}
+.hcol.na i{background:repeating-linear-gradient(45deg,#DDE4DF,#DDE4DF 3px,transparent 3px,transparent 6px);height:14px}
+.hcol em{font-style:normal;font-size:12.5px;font-weight:650;font-variant-numeric:tabular-nums;margin-bottom:4px}
+.hcol.na em{color:var(--muted);font-weight:500}
+.hlabels{display:flex;gap:10px;margin-top:6px}
+.hlabels span{flex:1;text-align:center;font-size:12px;color:var(--muted)}
+.hline{position:absolute;left:0;right:0;height:0;border-top:2.5px dashed var(--sol-dk);pointer-events:none}
+.hline span{position:absolute;right:0;top:-22px;background:var(--sol);color:var(--palma-dk);font-size:11.5px;font-weight:750;padding:1px 8px;border-radius:999px}
+.hist-note{font-size:13px;color:var(--muted);margin-top:8px}
+.veredicto{margin-top:18px;font-size:15.5px;line-height:1.5;padding:13px 16px;border-radius:var(--r-sm)}
+.veredicto.g{background:var(--ok-bg);color:#0F5A34}
+.veredicto.y{background:var(--mid-bg);color:#6E4700}
+.veredicto.r{background:var(--no-bg);color:#8E2A1E}
+.empty{background:var(--card);border-radius:var(--r-md);padding:26px;text-align:center;color:var(--muted)}
+.aviso{margin-top:22px;font-size:14.5px;color:var(--muted);max-width:52em;line-height:1.6}
+.aviso b{color:var(--ink)}
+
+/* ---------- PASO A PASO ---------- */
+.pasos-sec{padding-top:72px;padding-bottom:24px}
+.pasos{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px;counter-reset:p}
+.paso{background:var(--card);border-radius:var(--r-md);padding:22px 22px 24px;position:relative}
+.paso .pnum{font-size:52px;font-weight:800;font-stretch:75%;line-height:.9;color:var(--palma);display:block;margin-bottom:12px;font-variant-numeric:tabular-nums}
+.paso h3{font-size:18.5px;font-weight:700;line-height:1.25;margin-bottom:8px}
+.paso p{font-size:15px;color:var(--muted);line-height:1.55}
+.paso p b{color:var(--ink)}
+.paso.here{background:var(--palma-dk);color:#fff}
+.paso.here .pnum{color:var(--sol)}
+.paso.here p{color:rgba(255,255,255,.82)}
+.paso.here p b{color:#fff}
+.paso.here .you-are{position:absolute;top:18px;right:18px;background:var(--sol);color:var(--palma-dk);font-size:12.5px;font-weight:750;border-radius:999px;padding:3px 10px}
+
+.cambia{display:grid;grid-template-columns:1fr 1.1fr;gap:40px;align-items:center;background:var(--card);border-radius:var(--r-lg);padding:34px;margin-top:40px}
+.cambia h3{font-size:clamp(24px,3vw,32px);font-weight:760;font-stretch:84%;letter-spacing:-.015em;line-height:1.1;margin-bottom:12px}
+.cambia p{font-size:16px;color:var(--muted);line-height:1.6}
+.cambia p b{color:var(--ink)}
+.c-chart{display:flex;gap:12px;align-items:flex-end;height:200px}
+.c-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.c-col i{display:block;width:100%;background:var(--palma);border-radius:6px 6px 0 0}
+.c-col.max i{background:var(--no)}
+.c-col.min i{background:var(--ok)}
+.c-col b{font-size:17px;font-weight:720;margin-bottom:6px;font-variant-numeric:tabular-nums}
+.c-labels{display:flex;gap:12px;margin-top:8px}
+.c-labels span{flex:1;text-align:center;font-size:13px;color:var(--muted)}
+.c-cap{font-size:13.5px;color:var(--muted);margin-top:14px}
+
+/* ---------- FOOTER ---------- */
+footer{background:var(--palma-dk);color:rgba(255,255,255,.8);margin-top:72px;padding:44px 0 48px;font-size:14.5px}
+.foot{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center}
+.foot .escudo2{width:120px;background:#fff;padding:8px;border-radius:14px}
+.foot .escudo2 img{width:100%;display:block}
+.foot b{color:#fff}
+.foot p+p{margin-top:6px}
+.foot .linklike{background:none;border:none;color:var(--sol);font-weight:650;font-size:15px;text-decoration:underline;text-underline-offset:3px;padding:4px 0}
+
+/* ---------- OVERLAY EXPLICACIÓN ---------- */
+#overlay{position:fixed;inset:0;background:var(--paper);z-index:60;overflow-y:auto;display:none}
 #overlay.show{display:block}
-.ov-wrap{max-width:720px;margin:0 auto;padding:46px 22px 60px}
-.kicker{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green-tx);margin-bottom:14px}
-.ov-h{font-family:'Newsreader',Georgia,serif;font-weight:500;font-size:clamp(27px,5.5vw,40px);line-height:1.1;letter-spacing:-.02em;margin-bottom:16px}
-.ov-p{font-size:16px;line-height:1.65;color:var(--ink);margin-bottom:12px}
-.ov-step{border-left:2px solid var(--green);padding:2px 0 2px 18px;margin:28px 0}
-.ov-step h3{font-family:'Newsreader',Georgia,serif;font-size:20.5px;font-weight:600;margin-bottom:8px;letter-spacing:-.01em}
-.wrow{display:flex;align-items:center;gap:10px;margin:7px 0}
-.wname{width:168px;font-size:13.5px;color:var(--soft);flex-shrink:0}
-.wtrack{flex:1;height:14px;background:var(--bone2);border-radius:3px;overflow:hidden;min-width:0}
-.wbar{display:block;height:100%;background:var(--green);border-radius:3px}
-.wpct{font-size:12.5px;font-weight:700;color:var(--ink);width:38px;text-align:right;flex-shrink:0}
-.formula{font-family:'Newsreader',Georgia,serif;font-style:italic;font-size:16.5px;line-height:1.5;background:#fff;border:1px solid var(--hair);border-radius:8px;padding:14px 18px;margin:10px 0}
-.ejemplo{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
-.ej-card{border:1px solid var(--hair);border-radius:10px;padding:16px;background:#fff}
-.ej-card>b{font-family:'Newsreader',Georgia,serif;font-size:16.5px;font-weight:600}
-.ej-line{font-size:13.5px;color:var(--soft);margin-top:6px;line-height:1.5}
-.ej-res{margin-top:10px;font-size:13.5px;font-weight:700;border-radius:7px;padding:8px 11px}
-/* construcción animada del ponderado */
-.calc{margin-top:12px;border-top:1px solid var(--hair);padding-top:10px}
-.crow{display:grid;grid-template-columns:1fr 52px 48px;gap:8px;align-items:center;padding:5px 0}
+.ov-top{background:var(--palma-dk);color:#fff;padding:48px 0 40px}
+.ov-wrap{max-width:760px;margin:0 auto;padding:0 22px}
+.ov-kicker{display:inline-block;background:var(--sol);color:var(--palma-dk);font-weight:700;font-size:14px;border-radius:999px;padding:4px 12px;margin-bottom:18px}
+.ov-h{font-weight:780;font-stretch:80%;font-size:clamp(32px,6vw,52px);line-height:1;letter-spacing:-.025em;text-wrap:balance}
+.ov-intro{font-size:17.5px;line-height:1.6;margin-top:18px;color:rgba(255,255,255,.88)}
+.ov-intro b{color:#fff}
+.ov-body{padding-top:12px}
+.ov-p{font-size:16.5px;line-height:1.65;margin-bottom:12px}
+.ov-step{background:var(--card);border-radius:var(--r-lg);padding:26px 26px 22px;margin:18px 0}
+.ov-step h3{display:flex;gap:14px;align-items:baseline;font-size:21px;font-weight:720;line-height:1.25;margin-bottom:12px;letter-spacing:-.01em}
+.ov-step h3 span{font-size:36px;font-weight:800;font-stretch:75%;color:var(--palma);line-height:.8;flex-shrink:0}
+.wrow{display:flex;align-items:center;gap:12px;margin:8px 0}
+.wname{width:170px;font-size:14.5px;color:var(--muted);flex-shrink:0}
+.wtrack{flex:1;height:14px;background:#E8EEE9;border-radius:4px;overflow:hidden;min-width:0}
+.wbar{display:block;height:100%;background:var(--palma);border-radius:4px}
+.wpct{font-size:14px;font-weight:700;width:40px;text-align:right;flex-shrink:0;font-variant-numeric:tabular-nums}
+.formula{font-size:17px;line-height:1.5;background:var(--palma-lt);color:var(--palma-dk);border-radius:var(--r-md);padding:16px 18px;margin:6px 0 14px;font-weight:550}
+.ejemplo{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.ej-card{border:1.5px solid var(--line);border-radius:var(--r-md);padding:18px}
+.ej-card>b{font-size:17px;font-weight:700;line-height:1.25;display:block}
+.ej-line{font-size:14px;color:var(--muted);margin-top:8px;line-height:1.5}
+.ej-res{margin-top:10px;font-size:14px;font-weight:650;border-radius:var(--r-sm);padding:9px 12px}
+.ej-res.g{background:var(--ok-bg);color:#0F5A34}
+.ej-res.r{background:var(--no-bg);color:#8E2A1E}
+.calc{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+.crow{display:grid;grid-template-columns:1fr 36px 50px;gap:8px;align-items:center;padding:5px 0}
 .carea{min-width:0}
-.cname{display:block;font-size:12.5px;color:var(--ink);line-height:1.2}
-.cw{display:flex;align-items:center;gap:6px;margin-top:3px}
-.cwtrack{flex:1;height:6px;background:var(--bone2);border-radius:3px;overflow:hidden}
-.cwbar{display:block;height:100%;width:0;background:var(--green);border-radius:3px;transition:width .7s cubic-bezier(.16,1,.3,1)}
-.cwpct{font-size:11px;font-weight:700;color:var(--soft);width:34px;text-align:right;flex-shrink:0}
-.cscore{font-size:13.5px;text-align:right;color:var(--soft);font-variant-numeric:tabular-nums}
-.cprod{font-size:14.5px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums;
+.cname{display:block;font-size:13.5px;line-height:1.2}
+.cw{display:flex;align-items:center;gap:6px;margin-top:4px}
+.cwtrack{flex:1;height:6px;background:#E8EEE9;border-radius:3px;overflow:hidden}
+.cwbar{display:block;height:100%;width:0;background:var(--palma);border-radius:3px;transition:width .7s cubic-bezier(.16,1,.3,1)}
+.cwpct{font-size:11.5px;font-weight:700;color:var(--muted);width:38px;text-align:right;flex-shrink:0}
+.cscore{font-size:14px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+.cprod{font-size:15px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums;
   opacity:0;transform:translateY(4px);transition:opacity .4s ease,transform .4s ease;transition-delay:calc(var(--i)*.13s + .4s)}
-.csum{display:flex;justify-content:space-between;align-items:baseline;margin-top:8px;padding-top:9px;border-top:1px dashed var(--hair);
+.csum{display:flex;justify-content:space-between;align-items:baseline;margin-top:8px;padding-top:9px;border-top:1px dashed var(--line);
   opacity:0;transform:translateY(4px);transition:opacity .5s ease,transform .5s ease;transition-delay:1.15s}
-.csum span{font-size:12.5px;color:var(--soft)}
-.ctotal{font-family:'Newsreader',Georgia,serif;font-size:26px;font-weight:600;color:var(--green-tx);line-height:1}
+.csum span{font-size:13px;color:var(--muted)}
+.ctotal{font-size:30px;font-weight:780;font-stretch:80%;color:var(--palma);line-height:1;font-variant-numeric:tabular-nums}
 .calc.play .cwbar{width:var(--w)}
-.calc.play .cprod{opacity:1;transform:none}
-.calc.play .csum{opacity:1;transform:none}
+.calc.play .cprod,.calc.play .csum{opacity:1;transform:none}
+.small-note{font-size:14px;color:var(--muted)}
+.replay{background:none;border:none;color:var(--palma);font-weight:650;font-size:14.5px;text-decoration:underline;text-underline-offset:3px;padding:6px 0;margin-bottom:8px}
+.lecciones{display:grid;gap:10px;margin-top:4px}
+.lecciones p{display:flex;gap:12px;font-size:16px;line-height:1.55}
+.lecciones p > span:first-child{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--sol);color:var(--palma-dk);font-weight:800;display:grid;place-items:center;font-size:14px}
+.ov-cta{position:sticky;bottom:0;margin-top:10px;display:flex;flex-direction:column;gap:10px;
+  background:linear-gradient(180deg,rgba(238,242,236,0),var(--paper) 30%);padding:26px 0 calc(16px + env(safe-area-inset-bottom))}
+.ov-cta .btn-main{width:100%;background:var(--palma-dk);color:#fff}
+.ov-note{font-size:13.5px;color:var(--muted);text-align:center}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:940px){
+  .hero-grid{grid-template-columns:1fr;gap:32px}
+  .topbar{margin-bottom:30px}
+  .facts{margin-top:26px}
+  .prog-head{grid-template-columns:minmax(0,1fr) auto 20px;gap:10px 14px}
+  .ruler{grid-column:1 / -1;grid-row:2}
+  .pasos{grid-template-columns:1fr 1fr}
+  .cambia{grid-template-columns:1fr;gap:26px}
+}
+@media (max-width:640px){
+  .wrap{padding:0 18px}
+  .hero{padding-bottom:40px}
+  .facts{display:none}
+  .hero-copy .how{margin-top:20px}
+  .panel{padding:22px 18px;border-radius:18px}
+  .tiles{grid-template-columns:1fr 1fr}
+  .tile b{font-size:34px}
+  .prog-head{padding:14px 14px 14px 14px}
+  .pname{font-size:16.5px}
+  .pscore b{font-size:23px}
+  .prog-body{padding:4px 14px 18px}
+  .body-grid{grid-template-columns:1fr;gap:22px}
+  .w-row{grid-template-columns:118px 1fr 40px 46px;gap:8px;font-size:13.5px}
+  .pasos{grid-template-columns:1fr}
+  .cambia{padding:24px 20px}
+  .c-chart{height:160px}
+  .foot{grid-template-columns:1fr}
+  .ejemplo{grid-template-columns:1fr}
+  .wname{width:128px;font-size:13.5px}
+  .ov-step{padding:22px 18px 18px}
+  .legend{gap:12px}
+}
 @media (prefers-reduced-motion: reduce){
-  .calc .cwbar{width:var(--w)!important;transition:none}
+  html{scroll-behavior:auto}
+  *{transition:none!important}
+  .calc .cwbar{width:var(--w)!important}
   .calc .cprod,.calc .csum{opacity:1!important;transform:none!important}
 }
-.ej-res.g{background:var(--green-soft);color:var(--green-tx)}
-.ej-res.r{background:var(--red-soft);color:var(--red-tx)}
-.ov-cta{position:sticky;bottom:0;margin-top:28px;display:flex;flex-direction:column;gap:12px;align-items:stretch;
-  background:linear-gradient(180deg,rgba(251,250,247,0),var(--bone) 34%);padding:20px 0 calc(6px + env(safe-area-inset-bottom))}
-.ov-cta button{background:var(--green);width:100%;padding:16px 26px;font-size:16px}
-.ov-note{font-size:12.5px;color:var(--soft)}
-.linklike{background:none;border:none;color:var(--blue-tx);font-weight:600;font-size:13.5px;text-decoration:underline;cursor:pointer;padding:4px 0;font-family:inherit}
-a.linklike{display:inline-block}
-/* sección paso a paso */
-.sec-h{font-family:'Newsreader',Georgia,serif;font-weight:500;font-size:23px;letter-spacing:-.015em;margin-bottom:4px}
-.sec-sub{font-size:14px;color:var(--soft);margin-bottom:12px}
-.paso{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--hair)}
-.paso:last-of-type{border-bottom:none}
-.pnum{width:30px;height:30px;border-radius:50%;background:var(--green);color:#fff;font-weight:700;font-size:14.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
-.paso p{font-size:14.5px;line-height:1.55;color:var(--ink)}
-.cambia{margin-top:18px;background:var(--blue-soft);border-radius:9px;padding:16px 18px}
-.cambia h4{font-family:'Newsreader',Georgia,serif;font-size:18px;color:var(--blue-tx);margin-bottom:6px}
-.cambia p{font-size:14px;line-height:1.55}
-.timeline{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 10px}
-.tchip{background:#fff;border:1px solid var(--hair);border-radius:8px;padding:7px 12px;text-align:center}
-.tchip b{display:block;font-family:'Newsreader',Georgia,serif;font-size:16px}
-.tchip span{font-size:11px;color:var(--soft)}
-.cambia .pie{font-size:12.5px;color:var(--soft)}
-@media(max-width:560px){.ejemplo{grid-template-columns:1fr}.wname{width:130px}}
 </style>
 </head>
 <body>
-<header>
+
+<header class="hero">
   <div class="wrap">
-    <div class="escudo"><img src="escudo.png" alt="Escudo de la I. E. Santa Teresa de Jesús"></div>
-    <div>
-      <h1>¿A qué puedo ingresar en la Universidad del Quindío?</h1>
-      <p>Ingresa tus puntajes del ICFES y descubre, con los ponderados oficiales, a qué programas podrías calificar.</p>
+    <div class="topbar">
+      <div class="escudo"><img src="escudo.png" alt="Escudo de la I. E. Santa Teresa de Jesús"></div>
+      <p><b>I. E. Santa Teresa de Jesús</b>Área de Ciencias Sociales</p>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <h1>¿A qué carrera de la Uniquindío te alcanza tu ICFES?</h1>
+        <p class="sub">Escribe tus cinco puntajes del Saber 11. Te mostramos tu puntaje de ingreso en cada programa y lo comparamos con el del último admitido.</p>
+        <button class="how" id="verPond2" type="button"><span>?</span>¿Por qué no basta con mi puntaje global?</button>
+        <div class="facts">
+          <div><b class="num" id="factProg">37</b>programas y jornadas</div>
+          <div><b class="num">5</b>periodos de cierres</div>
+          <div><b>0</b>datos enviados: todo<br>se calcula en tu celular</div>
+        </div>
+      </div>
+
+      <div class="panel" id="panel">
+        <h2>Tus puntajes por área</h2>
+        <p class="hint">Cada área va de 0 a 100, tal como aparece en tu reporte del ICFES.</p>
+        <div class="area"><label for="lc">Lectura crítica</label><input type="number" id="lc" min="0" max="100" step="0.1" inputmode="decimal" placeholder="0–100"><span class="meter"><i></i></span></div>
+        <div class="area"><label for="mat">Matemáticas</label><input type="number" id="mat" min="0" max="100" step="0.1" inputmode="decimal" placeholder="0–100"><span class="meter"><i></i></span></div>
+        <div class="area"><label for="soc">Sociales y ciudadanas</label><input type="number" id="soc" min="0" max="100" step="0.1" inputmode="decimal" placeholder="0–100"><span class="meter"><i></i></span></div>
+        <div class="area"><label for="nat">Ciencias naturales</label><input type="number" id="nat" min="0" max="100" step="0.1" inputmode="decimal" placeholder="0–100"><span class="meter"><i></i></span></div>
+        <div class="area"><label for="ing">Inglés</label><input type="number" id="ing" min="0" max="100" step="0.1" inputmode="decimal" placeholder="0–100"><span class="meter"><i></i></span></div>
+        <div class="actions">
+          <button class="btn-main" id="calc" type="button">Ver mis opciones</button>
+          <button class="btn-ghost" id="reset" type="button">Limpiar</button>
+        </div>
+        <div class="err" id="err" role="alert"></div>
+      </div>
     </div>
   </div>
 </header>
 
-<div id="overlay">
-  <div class="ov-wrap">
-    <div class="kicker">Antes de empezar · lectura de 2 minutos</div>
-    <div class="ov-h">A la universidad no se entra con el puntaje total: se entra con el ponderado.</div>
-    <p class="ov-p">Seguramente conoces tu <b>puntaje global del ICFES</b> (esa nota de 0 a 500). Es la suma de tus cinco áreas, y sirve para muchísimas cosas — pero la Universidad del Quindío <b>no admite con ese número</b>. Lo que hace es una operación distinta, llamada <b>puntaje ponderado</b>, y el resultado cambia según la carrera que elijas.</p>
+<main>
+  <section id="resultados" class="wrap" aria-live="polite">
+    <h2 class="sec-title">Tus opciones en la Uniquindío</h2>
+    <p class="sec-sub">Comparado con el cierre del último periodo publicado (2026-2). Si un programa no abrió ese periodo, usamos su cierre más reciente. Toca un programa para ver cómo se calcula y su historial.</p>
 
+    <div class="tiles" id="tiles"></div>
+
+    <div class="toolbar">
+      <label class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" id="q" placeholder="Buscar carrera" aria-label="Buscar carrera">
+      </label>
+      <div class="legend" aria-hidden="true">
+        <span><i class="lg-you"></i>Tu puntaje</span>
+        <span><i class="lg-cut"></i>Último cierre</span>
+        <span><i class="lg-band"></i>Rango de cierres 2024-2 a 2026-2</span>
+      </div>
+    </div>
+
+    <div class="lista" id="lista"></div>
+
+    <p class="aviso"><b>Esto es una orientación, no una garantía.</b> Los puntajes de cierre son los del último admitido de cada periodo, según los documentos oficiales de la Oficina de Admisiones y Registros (Acuerdo 159 de 2023). Cambian en cada convocatoria según quién se inscriba y cuántos cupos haya. La decisión de admisión es exclusiva de la Universidad del Quindío.</p>
+  </section>
+
+  <section class="pasos-sec wrap">
+    <h2 class="sec-title">Tu paso a paso para ingresar</h2>
+    <p class="sec-sub">El proceso completo, en orden, tal como lo maneja la Oficina de Admisiones.</p>
+    <div class="pasos">
+      <div class="paso"><span class="pnum">1</span><h3>Presenta o valida tu ICFES</h3><p>Sin resultados vigentes del Saber 11 no hay inscripción. Tenlos a mano en PDF: la universidad los pide al matricularte.</p></div>
+      <div class="paso here"><span class="you-are">Estás aquí</span><span class="pnum">2</span><h3>Explora y compara programas</h3><p>Mira tu puntaje en varios programas, <b>incluidas las jornadas diurna y nocturna</b> (suelen cerrar distinto), y arma una lista corta de 2 o 3 opciones realistas.</p></div>
+      <div class="paso"><span class="pnum">3</span><h3>Compra el PIN de inscripción</h3><p>Se paga en línea o en bancos autorizados durante la ventana de inscripciones (para 2026-2 costó <b>$142.700</b>). Sin el PIN no puedes inscribirte.</p></div>
+      <div class="paso"><span class="pnum">4</span><h3>Llena el formulario y elige programa</h3><p>Diligencia tus datos, sube lo que te pidan y selecciona el programa. Revísalo todo dos veces: los errores de datos son el problema más común.</p></div>
+      <div class="paso"><span class="pnum">5</span><h3>Espera los resultados</h3><p>La universidad publica admitidos y listas de espera por periodo. Compara tu puntaje con el cierre y revisa si quedaste en alguna lista.</p></div>
+      <div class="paso"><span class="pnum">6</span><h3>Matricúlate a tiempo</h3><p>Si te admiten, paga dentro de las fechas y entrega tus documentos (fotos, ICFES en PDF, diploma o acta). <b>Pasarte de la fecha es perder el cupo.</b></p></div>
+    </div>
+
+    <div class="cambia">
+      <div>
+        <h3>El puntaje de corte no es fijo: cambia cada semestre</h3>
+        <p>El cierre es el puntaje <b>del último admitido</b>. Depende de qué tan preparados llegaron los demás aspirantes y de cuántos cupos abrió el programa. La misma carrera puede ser accesible un semestre y exigente el siguiente.</p>
+      </div>
+      <div>
+        <div class="c-chart" id="cChart"></div>
+        <div class="c-labels" id="cLabels"></div>
+        <p class="c-cap">Cierres reales de Ingeniería Electrónica: entre el más bajo y el más alto hay casi el doble. Por eso cada programa te muestra su rango completo, no un solo número.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="overlay" role="dialog" aria-modal="true" aria-labelledby="ovTitle">
+  <div class="ov-top">
+    <div class="ov-wrap">
+      <span class="ov-kicker">Antes de empezar: lectura de 2 minutos</span>
+      <div class="ov-h" id="ovTitle">A la universidad no se entra con el puntaje global: se entra con el ponderado.</div>
+      <p class="ov-intro">Seguramente conoces tu <b>puntaje global del ICFES</b> (esa nota de 0 a 500). Sirve para muchísimas cosas, pero la Universidad del Quindío <b>no admite con ese número</b>. Hace otra operación, el <b>puntaje ponderado</b>, y el resultado cambia según la carrera que elijas.</p>
+    </div>
+  </div>
+  <div class="ov-wrap ov-body">
     <div class="ov-step">
-      <h3>1 · Cada carrera le pone "peso" distinto a tus áreas</h3>
-      <p class="ov-p">Cada programa decide qué materias le importan más. Por ejemplo, así pondera <b>Comunicación Social – Periodismo</b>:</p>
+      <h3><span>1</span>Cada carrera le pone un peso distinto a tus áreas</h3>
+      <p class="ov-p">Cada programa decide qué materias le importan más. Así pondera <b>Comunicación Social – Periodismo</b>:</p>
       <div class="wrow"><span class="wname">Lectura crítica</span><span class="wtrack"><span class="wbar" style="width:100%"></span></span><span class="wpct">30%</span></div>
       <div class="wrow"><span class="wname">Sociales y ciudadanas</span><span class="wtrack"><span class="wbar" style="width:90%"></span></span><span class="wpct">27%</span></div>
       <div class="wrow"><span class="wname">Inglés</span><span class="wtrack"><span class="wbar" style="width:67%"></span></span><span class="wpct">20%</span></div>
       <div class="wrow"><span class="wname">Matemáticas</span><span class="wtrack"><span class="wbar" style="width:50%"></span></span><span class="wpct">15%</span></div>
       <div class="wrow"><span class="wname">Ciencias naturales</span><span class="wtrack"><span class="wbar" style="width:27%"></span></span><span class="wpct">8%</span></div>
-      <p class="ov-p" style="margin-top:10px">En Enfermería, en cambio, Sociales y Ciencias naturales valen <b>25% cada una</b>. Es decir: <b>el mismo examen vale distinto según lo que quieras estudiar.</b></p>
+      <p class="ov-p" style="margin-top:14px">En Enfermería, en cambio, Sociales y Ciencias naturales valen <b>25% cada una</b>. Es decir: <b>el mismo examen vale distinto según lo que quieras estudiar.</b></p>
     </div>
 
     <div class="ov-step">
-      <h3>2 · El cálculo: cada área × su peso, y se suma todo</h3>
+      <h3><span>2</span>El cálculo: cada área por su peso, y se suma todo</h3>
       <div class="formula">Puntaje de ingreso = (Lectura crítica × peso) + (Matemáticas × peso) + (Sociales × peso) + (Ciencias naturales × peso) + (Inglés × peso)</div>
-      <p class="ov-p">El resultado va de 0 a 100, y es <b>tu puntaje para esa carrera en concreto</b>. No existe "un solo puntaje tuyo": tienes uno por cada programa al que aspiras.</p>
+      <p class="ov-p">El resultado va de 0 a 100 y es <b>tu puntaje para esa carrera en concreto</b>. No tienes un solo puntaje: tienes uno por cada programa al que aspiras.</p>
     </div>
 
     <div class="ov-step">
-      <h3>3 · Un ejemplo con números reales</h3>
-      <p class="ov-p">Un estudiante saca <b>80 en Lectura crítica, 55 en Matemáticas, 75 en Sociales, 50 en Ciencias naturales y 70 en Inglés</b> — un global de 330/500, absolutamente respetable. Mira cómo se construye su puntaje en dos carreras:</p>
+      <h3><span>3</span>Un ejemplo con números reales</h3>
+      <p class="ov-p">Un estudiante saca <b>80 en Lectura crítica, 55 en Matemáticas, 75 en Sociales, 50 en Ciencias naturales y 70 en Inglés</b>. Mira cómo se construye su puntaje en dos carreras:</p>
       <div class="ejemplo">
         <div class="ej-card">
           <b>Comunicación Social – Periodismo</b>
           <div class="calc" data-total="70.5">
-            <div class="crow" style="--i:0">
-              <div class="carea"><span class="cname">Lectura crítica</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:100%"></span></span><span class="cwpct">30%</span></div></div>
-              <div class="cscore">80</div><div class="cprod">24,0</div>
-            </div>
-            <div class="crow" style="--i:1">
-              <div class="carea"><span class="cname">Matemáticas</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:50%"></span></span><span class="cwpct">15%</span></div></div>
-              <div class="cscore">55</div><div class="cprod">8,25</div>
-            </div>
-            <div class="crow" style="--i:2">
-              <div class="carea"><span class="cname">Sociales y ciudadanas</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:90%"></span></span><span class="cwpct">27%</span></div></div>
-              <div class="cscore">75</div><div class="cprod">20,25</div>
-            </div>
-            <div class="crow" style="--i:3">
-              <div class="carea"><span class="cname">Ciencias naturales</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:27%"></span></span><span class="cwpct">8%</span></div></div>
-              <div class="cscore">50</div><div class="cprod">4,0</div>
-            </div>
-            <div class="crow" style="--i:4">
-              <div class="carea"><span class="cname">Inglés</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:67%"></span></span><span class="cwpct">20%</span></div></div>
-              <div class="cscore">70</div><div class="cprod">14,0</div>
-            </div>
+            <div class="crow" style="--i:0"><div class="carea"><span class="cname">Lectura crítica</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:100%"></span></span><span class="cwpct">30%</span></div></div><div class="cscore">80</div><div class="cprod">24,0</div></div>
+            <div class="crow" style="--i:1"><div class="carea"><span class="cname">Matemáticas</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:50%"></span></span><span class="cwpct">15%</span></div></div><div class="cscore">55</div><div class="cprod">8,25</div></div>
+            <div class="crow" style="--i:2"><div class="carea"><span class="cname">Sociales y ciudadanas</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:90%"></span></span><span class="cwpct">27%</span></div></div><div class="cscore">75</div><div class="cprod">20,25</div></div>
+            <div class="crow" style="--i:3"><div class="carea"><span class="cname">Ciencias naturales</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:27%"></span></span><span class="cwpct">8%</span></div></div><div class="cscore">50</div><div class="cprod">4,0</div></div>
+            <div class="crow" style="--i:4"><div class="carea"><span class="cname">Inglés</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:67%"></span></span><span class="cwpct">20%</span></div></div><div class="cscore">70</div><div class="cprod">14,0</div></div>
             <div class="csum"><span>Suma de lo que aporta cada área</span><span class="ctotal" data-target="70.5">0,0</span></div>
           </div>
           <div class="ej-line">El último admitido en 2026-2 sacó 58,75.</div>
-          <div class="ej-res g">✓ Su ponderado supera el cierre: entra compitiendo arriba</div>
+          <div class="ej-res g">✓ Supera el cierre: entra compitiendo arriba</div>
         </div>
         <div class="ej-card">
           <b>Enfermería</b>
           <div class="calc" data-total="65.4">
-            <div class="crow" style="--i:0">
-              <div class="carea"><span class="cname">Lectura crítica</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:58%"></span></span><span class="cwpct">17,5%</span></div></div>
-              <div class="cscore">80</div><div class="cprod">14,0</div>
-            </div>
-            <div class="crow" style="--i:1">
-              <div class="carea"><span class="cname">Matemáticas</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:58%"></span></span><span class="cwpct">17,5%</span></div></div>
-              <div class="cscore">55</div><div class="cprod">9,63</div>
-            </div>
-            <div class="crow" style="--i:2">
-              <div class="carea"><span class="cname">Sociales y ciudadanas</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:83%"></span></span><span class="cwpct">25%</span></div></div>
-              <div class="cscore">75</div><div class="cprod">18,75</div>
-            </div>
-            <div class="crow" style="--i:3">
-              <div class="carea"><span class="cname">Ciencias naturales</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:83%"></span></span><span class="cwpct">25%</span></div></div>
-              <div class="cscore">50</div><div class="cprod">12,5</div>
-            </div>
-            <div class="crow" style="--i:4">
-              <div class="carea"><span class="cname">Inglés</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:50%"></span></span><span class="cwpct">15%</span></div></div>
-              <div class="cscore">70</div><div class="cprod">10,5</div>
-            </div>
+            <div class="crow" style="--i:0"><div class="carea"><span class="cname">Lectura crítica</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:58%"></span></span><span class="cwpct">17,5%</span></div></div><div class="cscore">80</div><div class="cprod">14,0</div></div>
+            <div class="crow" style="--i:1"><div class="carea"><span class="cname">Matemáticas</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:58%"></span></span><span class="cwpct">17,5%</span></div></div><div class="cscore">55</div><div class="cprod">9,63</div></div>
+            <div class="crow" style="--i:2"><div class="carea"><span class="cname">Sociales y ciudadanas</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:83%"></span></span><span class="cwpct">25%</span></div></div><div class="cscore">75</div><div class="cprod">18,75</div></div>
+            <div class="crow" style="--i:3"><div class="carea"><span class="cname">Ciencias naturales</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:83%"></span></span><span class="cwpct">25%</span></div></div><div class="cscore">50</div><div class="cprod">12,5</div></div>
+            <div class="crow" style="--i:4"><div class="carea"><span class="cname">Inglés</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:50%"></span></span><span class="cwpct">15%</span></div></div><div class="cscore">70</div><div class="cprod">10,5</div></div>
             <div class="csum"><span>Suma de lo que aporta cada área</span><span class="ctotal" data-target="65.4">0,0</span></div>
           </div>
           <div class="ej-line">El último admitido en 2026-1 sacó 75,25.</div>
-          <div class="ej-res r">✕ Mismo estudiante, mismo examen: no alcanzó el cierre</div>
+          <div class="ej-res r">✕ Mismo estudiante, mismo examen: no alcanza el cierre</div>
         </div>
       </div>
-      <p class="ov-p" style="font-size:13px;color:var(--soft)">La barra verde muestra cuánto <b>pesa</b> cada área en esa carrera (más larga = más pesa). El número de la derecha es lo que esa área <b>aporta</b> a tu puntaje: tu nota × su peso. Abajo, todo sumado.</p>
-      <button class="linklike" id="replayCalc" type="button">↻ Ver la animación de nuevo</button>
-      <p class="ov-p"><b>Nada cambió entre las dos columnas:</b> ni el examen, ni las notas, ni el esfuerzo. Lo único que cambió es la carrera. Por eso esta calculadora no te dice "tu puntaje": te dice <b>tu puntaje en cada programa</b>, comparado con su cierre real.</p>
+      <p class="small-note">La barra verde muestra cuánto <b>pesa</b> cada área en esa carrera. El número de la derecha es lo que esa área <b>aporta</b>: tu nota por su peso. Abajo, todo sumado.</p>
+      <button class="replay" id="replayCalc" type="button">↻ Ver la animación de nuevo</button>
+      <p class="ov-p"><b>Nada cambió entre las dos columnas:</b> ni el examen, ni las notas, ni el esfuerzo. Solo cambió la carrera. Por eso esta calculadora no te da «tu puntaje»: te da <b>tu puntaje en cada programa</b>, comparado con su cierre real.</p>
     </div>
 
     <div class="ov-step">
-      <h3>4 · Lo que esto significa para ti</h3>
-      <p class="ov-p">① Tu global 0–500 no define tu futuro: <b>una estrategia inteligente vale tanto como 40 puntos</b>. &nbsp;② Antes de descartar una carrera, <b>calcula tu ponderado en ella</b> — tal vez estás más cerca de lo que crees. &nbsp;③ Si un área tuya es fuerte, busca los programas donde <b>esa área pesa más</b>: ahí tu examen rinde al máximo.</p>
+      <h3><span>4</span>Lo que esto significa para ti</h3>
+      <div class="lecciones">
+        <p><span>1</span><span>Tu global de 0 a 500 no define tu futuro: <b>una estrategia inteligente puede valer tanto como 40 puntos</b>.</span></p>
+        <p><span>2</span><span>Antes de descartar una carrera, <b>calcula tu ponderado en ella</b>: tal vez estás más cerca de lo que crees.</span></p>
+        <p><span>3</span><span>Si tienes un área fuerte, busca los programas donde <b>esa área pesa más</b>: ahí tu examen rinde al máximo.</span></p>
+      </div>
     </div>
 
     <div class="ov-cta">
-      <button id="ovOk" type="button">Entendido — calcular mis opciones</button>
-      <span class="ov-note">Podrás volver a leer esta explicación cuando quieras, con el enlace «¿Cómo funciona el puntaje ponderado?» al pie de la página.</span>
+      <button class="btn-main" id="ovOk" type="button">Entendido, quiero calcular mis opciones</button>
+      <span class="ov-note">Puedes volver a esta explicación cuando quieras desde el botón de arriba o el pie de página.</span>
     </div>
   </div>
 </div>
 
-<main class="wrap">
-  <div class="card">
-    <p class="lead">Escribe tus resultados por área del examen Saber 11 (cada área va de 0 a 100, aparecen así en tu reporte del ICFES).</p>
-    <div class="inputs">
-      <div><label>Lectura crítica</label><input type="number" id="lc" min="0" max="100" step="0.1" placeholder="0–100"></div>
-      <div><label>Matemáticas</label><input type="number" id="mat" min="0" max="100" step="0.1" placeholder="0–100"></div>
-      <div><label>Sociales y ciudadanas</label><input type="number" id="soc" min="0" max="100" step="0.1" placeholder="0–100"></div>
-      <div><label>Ciencias naturales</label><input type="number" id="nat" min="0" max="100" step="0.1" placeholder="0–100"></div>
-      <div><label>Inglés</label><input type="number" id="ing" min="0" max="0" max="100" step="0.1" placeholder="0–100"></div>
-    </div>
-    <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-      <button id="calc">Calcular mis opciones</button>
-      <button id="reset" style="background:#fff;color:var(--ink);border:1px solid var(--hair)">Limpiar</button>
-    </div>
-    <div class="note" style="display:none" id="err"></div>
-  </div>
-
-  <div class="card">
-    <div class="sec-h">Tu paso a paso para ingresar</div>
-    <div class="sec-sub">El proceso completo, en orden, tal como lo maneja la Oficina de Admisiones.</div>
-    <div class="paso"><span class="pnum">1</span><p><b>Presenta o valida tu ICFES.</b> Todo empieza por ahí: sin resultados vigentes del Saber 11 no hay inscripción. Si ya los tienes, tenlos a mano en PDF: la universidad los pide al momento de matrícula.</p></div>
-    <div class="paso"><span class="pnum">2</span><p><b>Explora y compara programas.</b> Usa esta calculadora: mira tu ponderado en varios programas (incluyendo jornadas diurna y nocturna — suelen cerrar distinto) y arma tu lista corta de 2 o 3 opciones realistas.</p></div>
-    <div class="paso"><span class="pnum">3</span><p><b>Compra el PIN de inscripción.</b> Se paga en línea o en bancos autorizados durante la ventana de inscripciones (para 2026-2 fue $142.700). Este PIN es tu llave para entrar al formulario — sin él no puedes inscribirte.</p></div>
-    <div class="paso"><span class="pnum">4</span><p><b>Llena el formulario y elige tu programa.</b> Dentro de la ventana, diligencia tus datos, sube lo solicitado y selecciona el programa al que aspiras. Verifica todo dos veces: los errores de datos son la causa más común de problemas posteriores.</p></div>
-    <div class="paso"><span class="pnum">5</span><p><b>Espera los resultados y simula tu cupo.</b> La universidad publica admitidos, listas y esperas por periodo. Compara tu puntaje ponderado con el cierre publicado y revisa si quedaste en alguna lista de espera.</p></div>
-    <div class="paso"><span class="pnum">6</span><p><b>Matricúlate a tiempo.</b> Si quedas admitido, paga la matrícula dentro de las fechas e inicia tu verificación de documentos (fotos, ICFES en PDF, diploma o acta). Quedarte fuera de la fecha de matrícula es perder el cupo.</p></div>
-
-    <div class="cambia">
-      <h4>Importante: el puntaje de corte cambia cada periodo</h4>
-      <p>No existe un puntaje mínimo fijo. Cada convocatoria, el cierre es el puntaje <b>del último admitido</b>: depende de qué tan preparados fueron los que se inscribieron contigo y de cuántos cupos tuvo el programa. El mismo programa puede ser fácil un semestre y exigente al siguiente.</p>
-      <div class="timeline">
-        <div class="tchip"><span>2024-2</span><b>34,2</b></div>
-        <div class="tchip"><span>2025-1</span><b>64,95</b></div>
-        <div class="tchip"><span>2025-2</span><b>53,75</b></div>
-        <div class="tchip"><span>2026-1</span><b>65,1</b></div>
-        <div class="tchip"><span>2026-2</span><b>42,3</b></div>
-      </div>
-      <p class="pie">Cierres reales de Ingeniería Electrónica en los últimos 5 periodos: casi el doble de diferencia entre el más bajo y el más alto. Por eso esta calculadora te muestra el rango completo de cada programa y no un solo número.</p>
-    </div>
-  </div>
-
-  <div id="resultados">
-    <div class="card" style="padding:22px">
-      <p class="lead">Estos son tus resultados para el <b>último periodo con cierre publicado: 2026-2</b>.</p>
-      <div class="resumen" id="resumen"></div>
-      <div class="filtros" id="filtros"></div>
-      <p class="hint">Toca cualquier programa para ver su histórico 2024-2 → 2026-2 y el detalle del cálculo.</p>
-    </div>
-    <div id="lista"></div>
-
-    <div class="aviso">
-      <b>Importante:</b> esta herramienta es orientativa. Los puntajes de cierre son el resultado del último admitido
-      de cada periodo (documentos oficiales de la Oficina de Admisiones y Registros, Acuerdo 159 de 2023) y cambian
-      cada convocatoria según quién se inscriba y los cupos. <b>No garantizan el ingreso.</b> La decisión de admisión
-      es exclusiva de la Universidad del Quindío.
-    </div>
-  </div>
-</main>
-
 <footer>
-  <div class="wrap">
+  <div class="wrap foot">
     <div class="escudo2"><img src="escudo_full.png" alt="Escudo de la I. E. Santa Teresa de Jesús"></div>
-    <p><b>I. E. Santa Teresa de Jesús</b> — Área de Ciencias Sociales</p>
-    <p>Calculadora orientativa · ponderaciones oficiales de la Uniquindío (Res. ICFES 470/2017) y cierres 2024-2 → 2026-2 (Acuerdo 159/2023).</p>
-    <p style="margin-top:8px"><button class="linklike" id="verPond" type="button">¿Cómo funciona el puntaje ponderado?</button></p>
-    <p style="margin-top:10px">By Camilo Moreno</p>
+    <div>
+      <p><b>I. E. Santa Teresa de Jesús</b>, Área de Ciencias Sociales. By Camilo Moreno.</p>
+      <p>Calculadora orientativa con las ponderaciones oficiales de la Uniquindío (Res. ICFES 470/2017) y los cierres de 2024-2 a 2026-2 (Acuerdo 159/2023).</p>
+      <p><button class="linklike" id="verPond" type="button">¿Cómo funciona el puntaje ponderado?</button></p>
+    </div>
   </div>
 </footer>
 
@@ -402,21 +529,31 @@ const PER = ["2024-2","2025-1","2025-2","2026-1","2026-2"];
 const LAST = "2026-2";
 const LASTI = PER.indexOf(LAST);
 const AREAS = ["Lectura crítica","Matemáticas","Sociales y ciudadanas","Ciencias naturales","Inglés"];
+const IDS = ["lc","mat","soc","nat","ing"];
 const TL = 3; // banda "al límite": hasta 3 puntos por debajo del cierre
 
 let filt = "todos";
+let query = "";
 let lastScores = null;
+const abiertos = new Set();
 
 const $ = id => document.getElementById(id);
-const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
-const fmt = v => v == null ? "—" : v.toFixed(2).replace(".", ",");
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
+const fmt = (v, d=2) => v == null ? "—" : v.toFixed(d).replace(".", ",");
+const pctTxt = w => String(Math.round(w*1000)/10).replace(".", ",") + "%";
 const llave = t => t.n + "|" + (t.j || "");
+const norm = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+const clamp = v => Math.max(0, Math.min(100, v));
+
+$("factProg").textContent = DATA.length;
 
 function calcular(s){
   return DATA.map(t => {
     let cRef = null, refP = null;
     for (let i = LASTI; i >= 0; i--){ if (t.c[i] != null){ cRef = t.c[i]; refP = PER[i]; break; } }
-    return {...t, score: t.p.reduce((a,w,i)=>a + w*s[i], 0), cRef, refP};
+    const vals = t.c.filter(v => v != null);
+    return {...t, score: t.p.reduce((a,w,i)=>a + w*s[i], 0), cRef, refP,
+      cMin: vals.length ? Math.min(...vals) : null, cMax: vals.length ? Math.max(...vals) : null};
   });
 }
 
@@ -427,141 +564,180 @@ function estado(t){
   return "r";
 }
 
-function refPeriodo(t){ return t.c[LASTI] != null ? LAST : PER[4 - [...t.c].reverse().findIndex(v=>v!=null)]; }
+const ICON_CARET = '<svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
 
-function detalle(t){
-  const parts = [];
-  for (let i=0;i<5;i++){
-    const w = Math.round(t.p[i]*1000)/10;
-    if (w > 0) parts.push(AREAS[i] + " " + String(w).replace(".",",") + "%");
-  }
-  return parts.join(" · ");
+function regla(t){
+  let h = '<span class="ruler" aria-hidden="true"><span class="r-track"></span>';
+  [25,50,75].forEach(x => h += '<span class="r-tick" style="left:' + x + '%"></span>');
+  if (t.cMin != null) h += '<span class="r-band" style="left:' + t.cMin + '%;width:' + Math.max(1, t.cMax - t.cMin) + '%"></span>';
+  if (t.cRef != null) h += '<span class="r-cut" style="left:' + t.cRef + '%"></span>';
+  h += '<span class="r-you" style="left:' + clamp(t.score) + '%"></span></span>';
+  return h;
+}
+
+function pesos(t){
+  const maxW = Math.max(...t.p);
+  let h = '<div class="w-row head"><span>Área</span><span></span><span>Peso</span><span>Aporta</span></div>';
+  t.p.forEach((w,i) => {
+    h += '<div class="w-row"><span class="wn">' + AREAS[i] + '</span><span class="wt"><i style="width:' + (maxW ? w/maxW*100 : 0) + '%"></i></span>' +
+      '<span class="wp">' + pctTxt(w) + '</span><span class="wa">' + fmt(w*lastScores[i]) + '</span></div>';
+  });
+  h += '<div class="w-sum"><span>Tu puntaje en este programa</span><b>' + fmt(t.score) + '</b></div>';
+  return h;
+}
+
+function historia(t){
+  let cols = "", labels = "";
+  PER.forEach((p,i) => {
+    const v = t.c[i];
+    cols += v == null
+      ? '<div class="hcol na"><em>—</em><i></i></div>'
+      : '<div class="hcol"><em>' + fmt(v,1) + '</em><i style="height:' + (v * 0.84) + '%"></i></div>';
+    labels += '<span>' + p + '</span>';
+  });
+  // la línea usa la misma escala que las barras (84% del alto útil = 100 puntos), desde la base
+  const bottom = clamp(t.score) * 0.84 * (114/132); // 114px útiles de 132px (padding superior 18px)
+  return '<div class="hist">' + cols +
+    '<div class="hline" style="bottom:' + bottom + '%"><span>Tú: ' + fmt(t.score,1) + '</span></div></div>' +
+    '<div class="hlabels">' + labels + '</div>';
+}
+
+function veredicto(t, e){
+  const ref = t.refP;
+  if (e === "g") return '<div class="veredicto g">✓ Tu puntaje (' + fmt(t.score) + ') supera el cierre de ' + ref + ' (' + fmt(t.cRef) + ') por ' + fmt(t.score - t.cRef) + ' puntos. Te habría puesto por encima del último admitido.</div>';
+  if (e === "y") return '<div class="veredicto y">≈ Estás a ' + fmt(t.cRef - t.score) + ' puntos del cierre de ' + ref + '. Está a tu alcance: los cierres se mueven cada periodo según quién se inscriba.</div>';
+  return '<div class="veredicto r">✕ Te faltan ' + fmt(t.cRef - t.score) + ' puntos para el cierre de ' + ref + '. Considera presentar de nuevo el examen o mirar programas afines con cierres más accesibles.</div>';
 }
 
 function render(){
   const r = calcular(lastScores);
-  const counts = {g:0,y:0,r:0,sd:0};
-  r.forEach(t => counts[estado(t)] === undefined ? counts.sd++ : counts[estado(t)]++);
-  // resumen
-  $("resumen").innerHTML =
-    '<span class="chip g">✓ ' + counts.g + ' con margen</span>' +
-    '<span class="chip y">≈ ' + counts.y + ' al límite</span>' +
-    '<span class="chip r">✕ ' + counts.r + ' por debajo</span>' +
-    (counts.sd ? '<span class="chip" style="background:var(--bone2);color:var(--soft)">• ' + counts.sd + ' sin dato</span>' : '');
-  // filtros
-  const fb = [
-    ["todos","Todos (" + r.length + ")"],
-    ["g","Con margen (" + counts.g + ")"],
-    ["y","Al límite (" + counts.y + ")"],
-    ["r","Por debajo (" + counts.r + ")"],
-  ];
-  if (counts.sd) fb.push(["sindato","Sin dato (" + counts.sd + ")"]);
-  $("filtros").innerHTML = fb.map(f =>
-    '<button class="fbtn' + (filt===f[0]?" on":"") + '" data-f="' + f[0] + '">' + f[1] + '</button>').join("");
-  // lista
-  let out = [];
+  const counts = {g:0,y:0,r:0,sindato:0};
+  r.forEach(t => counts[estado(t)]++);
+
+  const tiles = [["todos", r.length, "Todos los programas"],["g",counts.g,"Con margen"],["y",counts.y,"Al límite"],["r",counts.r,"Por debajo"]];
+  $("tiles").innerHTML = tiles.map(x =>
+    '<button type="button" class="tile ' + (x[0]==="todos"?"":x[0]) + (filt===x[0]?" on":"") + '" data-f="' + x[0] + '" aria-pressed="' + (filt===x[0]) + '"><b>' + x[1] + '</b><span>' + x[2] + '</span></button>').join("");
+
   const orden = {g:0, y:1, sindato:2, r:3};
-  [...r].sort((a,b)=>{
-    const ea=estado(a), eb=estado(b);
-    if (orden[ea]!==orden[eb]) return orden[ea]-orden[eb];
+  const qn = norm(query.trim());
+  const out = [];
+  [...r].sort((a,b) => {
+    const ea = estado(a), eb = estado(b);
+    if (orden[ea] !== orden[eb]) return orden[ea] - orden[eb];
+    // con margen: primero los más exigentes que alcanzas; al límite y por debajo: primero los más cercanos
+    if (ea === "g") return b.cRef - a.cRef;
+    if (ea === "y" || ea === "r") return (a.cRef - a.score) - (b.cRef - b.score);
     return b.score - a.score;
-  }).forEach(t=>{
+  }).forEach(t => {
     const e = estado(t);
     if (filt !== "todos" && filt !== e) return;
-    const ref = t.refP || "—";
-    const delta = t.cRef == null ? null : t.score - t.cRef;
-    let head = '<div class="prog reveal" data-k="' + esc(llave(t)) + '">' +
-      '<div class="prog-head"><span class="dot ' + (e==="sindato"?"y":e) + '"></span>' +
-      '<div class="pname">' + esc(t.n) + (t.j ? ' <small style="color:var(--soft);font-weight:400">· ' + esc(t.j) + '</small>' : '') + '</div>' +
-      '<div class="pscore"><b>' + t.score.toFixed(2).replace(".",",") + '</b>' +
-      '<span>' + (t.cRef==null ? "sin cierre" : "cierre " + fmt(t.cRef) + " · " + ref) + '</span></div>' +
-      '<span class="caret">▼</span></div><div class="prog-body">';
+    if (qn && !norm(t.n + " " + t.f + " " + t.j).includes(qn)) return;
+    const k = llave(t);
+    const open = abiertos.has(k);
+    const pillTxt = e === "g" ? "Con margen (+" + fmt(t.score - t.cRef,1) + ")"
+                  : e === "y" ? "Al límite (−" + fmt(t.cRef - t.score,1) + ")"
+                  : e === "r" ? "Por debajo (−" + fmt(t.cRef - t.score,1) + ")"
+                  : "Sin cierre reciente";
+    let h = '<div class="prog ' + (e==="sindato"?"":e) + (open?" open":"") + '" data-k="' + esc(k) + '">' +
+      '<button type="button" class="prog-head" aria-expanded="' + open + '">' +
+        '<span class="pn"><span class="pname">' + esc(t.n) + '</span><span class="pmeta">' +
+          '<span class="pill ' + (e==="sindato"?"s":e) + '">' + pillTxt + '</span>' +
+          (t.j ? '<span class="pill j">' + esc(t.j) + '</span>' : '') +
+        '</span></span>' +
+        regla(t) +
+        '<span class="pscore"><b>' + fmt(t.score) + '</b><small>' + (t.cRef==null ? "sin cierre publicado" : "cierre " + fmt(t.cRef) + " (" + t.refP + ")") + '</small></span>' +
+        ICON_CARET +
+      '</button><div class="prog-body">';
     if (t.cRef == null){
-      head += '<div class="mini">' + detalle(t) + '</div>' +
-        '<div class="veredicto y">Este programa no tuvo cierre publicado en los periodos recientes (no se ofertó o no hubo aspirantes). ' +
-        'Aun así, calcula tu puntaje con el simulador oficial y consulta con Admisiones.</div></div></div>';
-      out.push(head);
-      return;
-    }
-    // barras históricas
-    let bars = "";
-    const maxV = Math.max(...t.c.filter(v=>v!=null), t.score, 100);
-    PER.forEach((p,i)=>{
-      const v = t.c[i];
-      if (v==null){ bars += '<div class="hbar na"><i style="height:12px"></i><span>—</span><span class="mi">' + p + '</span></div>'; }
-      else{
-        const h = Math.round(v / maxV * 56);
-        bars += '<div class="hbar"><i style="height:' + h + 'px"></i><span>' + fmt(v) + '</span><span class="mi">' + p + '</span></div>';
-      }
-    });
-    // veredicto
-    let vd = "";
-    if (e==="g"){
-      vd = '<div class="veredicto g">✓ Tu puntaje (' + t.score.toFixed(2).replace(".",",") + ') supera el cierre de ' + ref +
-        ' (' + fmt(t.cRef) + ') por ' + delta.toFixed(2).replace(".",",") + ' puntos. Te colocaría por encima del último admitido.</div>';
-    } else if (e==="y"){
-      vd = '<div class="veredicto y">≈ Estás a ' + (t.cRef - t.score).toFixed(2).replace(".",",") +
-        ' puntos del cierre de ' + ref + '. Está al alcance: los cierres se mueven cada periodo según quién se inscriba.</div>';
+      h += '<div class="body-grid"><div><h4>Cómo pesa cada área aquí</h4>' + pesos(t) + '</div></div>' +
+        '<div class="veredicto y">Este programa no tuvo cierre publicado en los periodos recientes (no se ofertó o no hubo aspirantes). Calcula tu puntaje con el simulador oficial y consulta con Admisiones.</div>';
     } else {
-      vd = '<div class="veredicto r">✕ Te faltan ' + (t.cRef - t.score).toFixed(2).replace(".",",") +
-        ' puntos para el cierre de ' + ref + '. Considera presentarlo de nuevo o evaluar programas afines con cierres más accesibles.</div>';
+      h += '<div class="body-grid"><div><h4>Cómo pesa cada área aquí</h4>' + pesos(t) + '</div>' +
+        '<div><h4>Cierres de los últimos periodos</h4>' + historia(t) +
+        '<p class="hist-note">Cada barra es el puntaje del último admitido en ese periodo. La línea amarilla es el tuyo.</p></div></div>' +
+        veredicto(t, e);
     }
-    head += '<div class="mini">' + detalle(t) + '</div>' +
-      '<div class="historia">' + bars + '</div>' +
-      '<div class="mi">Barras: puntaje de cierre de cada periodo (escala ponderada 0–100). Tus ' + t.score.toFixed(2).replace(".",",") + ' vs cierre ' + ref + '.</div>' +
-      vd + '</div></div>';
-    out.push(head);
+    h += '</div></div>';
+    out.push(h);
   });
-  $("lista").innerHTML = out.join("") || '<p class="hint" style="padding:10px 4px">No hay programas en esta categoría.</p>';
-  // listeners
-  document.querySelectorAll(".fbtn").forEach(b => b.onclick = () => { filt = b.dataset.f; render(); });
-  document.querySelectorAll(".prog-head").forEach(h => h.onclick = () => h.parentElement.classList.toggle("open"));
-  // entrada escalonada
-  const iobs = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting){ en.target.classList.add("in"); iobs.unobserve(en.target); } }), {threshold:.08});
-  const progs2 = document.querySelectorAll("#lista .prog");
-  progs2.forEach((p,i) => { p.style.transitionDelay = Math.min(i*45, 420) + "ms"; iobs.observe(p); });
-  // fail-safe: nada queda oculto aunque no haya scroll/observer
-  setTimeout(() => progs2.forEach(p => p.classList.add("in")), 1600);
+  $("lista").innerHTML = out.join("") || '<div class="empty">No hay programas que coincidan. Prueba con otra búsqueda o toca «Todos los programas».</div>';
 }
 
+// delegación de eventos en resultados
+$("tiles").addEventListener("click", e => {
+  const b = e.target.closest(".tile"); if (!b) return;
+  filt = b.dataset.f; render();
+});
+$("lista").addEventListener("click", e => {
+  const head = e.target.closest(".prog-head"); if (!head) return;
+  const p = head.parentElement, k = p.dataset.k;
+  const open = p.classList.toggle("open");
+  head.setAttribute("aria-expanded", open);
+  open ? abiertos.add(k) : abiertos.delete(k);
+});
+$("q").addEventListener("input", e => { query = e.target.value; if (lastScores) render(); });
+
+// ---- entradas
 function leerInputs(){
-  const v = ["lc","mat","soc","nat","ing"].map(id => parseFloat($(id).value));
+  const v = IDS.map(id => parseFloat(String($(id).value).replace(",", ".")));
   if (v.some(x => isNaN(x))) return null;
   if (v.some(x => x < 0 || x > 100)) return "rango";
   return v;
 }
+function pintarMedidores(){
+  IDS.forEach(id => {
+    const inp = $(id), raw = parseFloat(String(inp.value).replace(",", "."));
+    const bad = !isNaN(raw) && (raw < 0 || raw > 100);
+    inp.classList.toggle("bad", bad);
+    inp.parentElement.querySelector(".meter i").style.width = (isNaN(raw) ? 0 : clamp(raw)) + "%";
+  });
+}
+function mostrarError(html){ const err = $("err"); err.style.display = "block"; err.innerHTML = html; }
+
+IDS.forEach((id, i) => {
+  $(id).addEventListener("input", () => {
+    pintarMedidores();
+    // si ya hay resultados, se actualizan en vivo
+    if (lastScores){ const v = leerInputs(); if (Array.isArray(v)){ lastScores = v; $("err").style.display = "none"; render(); } }
+  });
+  $(id).addEventListener("keydown", e => {
+    if (e.key === "Enter"){ e.preventDefault(); i < IDS.length - 1 ? $(IDS[i+1]).focus() : $("calc").click(); }
+  });
+});
 
 $("calc").onclick = () => {
   const v = leerInputs();
-  const err = $("err");
   if (v === null){
-    err.style.display = "block";
-    err.innerHTML = "<b>Faltan puntajes:</b> llena las cinco áreas para calcular. Si tu reporte no trae Inglés, escribe tu estimación más prudente.";
+    mostrarError("<b>Faltan puntajes.</b> Llena las cinco áreas para calcular. Si tu reporte no trae Inglés, escribe tu estimación más prudente.");
+    const vacio = IDS.find(id => $(id).value === ""); if (vacio) $(vacio).focus();
     return;
   }
-  if (v === "rango"){
-    err.style.display = "block";
-    err.innerHTML = "<b>Revisa los valores:</b> cada área va de 0 a 100.";
-    return;
-  }
-  err.style.display = "none";
+  if (v === "rango"){ mostrarError("<b>Revisa los valores.</b> Cada área va de 0 a 100."); return; }
+  $("err").style.display = "none";
   lastScores = v;
   filt = "todos";
   $("resultados").style.display = "block";
-  const rc = document.getElementById("resultados").querySelectorAll(".card, .aviso");
-  rc.forEach(el => el.classList.add("reveal"));
-  requestAnimationFrame(() => requestAnimationFrame(() => rc.forEach(el => el.classList.add("in"))));
   render();
-  $("resultados").scrollIntoView({behavior:"smooth"});
+  $("resultados").scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
 };
 
 $("reset").onclick = () => {
-  ["lc","mat","soc","nat","ing"].forEach(id => $(id).value = "");
+  IDS.forEach(id => $(id).value = "");
+  pintarMedidores();
   $("resultados").style.display = "none";
   $("err").style.display = "none";
-  lastScores = null;
-  filt = "todos";
+  lastScores = null; filt = "todos"; query = ""; $("q").value = ""; abiertos.clear();
+  $("lc").focus();
 };
+
+// ---- gráfico "el cierre cambia" (Ingeniería Electrónica, desde DATA)
+(function(){
+  const t = DATA.find(d => d.n === "Ingeniería Electrónica");
+  const vals = t.c.filter(v => v != null), mx = Math.max(...vals), mn = Math.min(...vals);
+  $("cChart").innerHTML = t.c.map(v => v == null ? '<div class="c-col"></div>' :
+    '<div class="c-col' + (v===mx?" max":v===mn?" min":"") + '"><b>' + fmt(v,1) + '</b><i style="height:' + (v/100*82) + '%"></i></div>').join("");
+  $("cLabels").innerHTML = PER.map(p => '<span>' + p + '</span>').join("");
+})();
 
 // ---- pantalla explicación del ponderado
 const ov = $("overlay");
@@ -582,10 +758,7 @@ function playCalcs(){
       const t0 = performance.now(), dur = 1100, delay = 1050;
       function tick(now){
         const p = Math.min(1, (now - t0 - delay) / dur);
-        if (p > 0){
-          const v = target * (1 - Math.pow(1 - p, 3));
-          el.textContent = v.toFixed(1).replace(".", ",");
-        }
+        if (p > 0) el.textContent = (target * (1 - Math.pow(1 - p, 3))).toFixed(1).replace(".", ",");
         if (p < 1) requestAnimationFrame(tick);
         else el.textContent = target.toFixed(1).replace(".", ",");
       }
@@ -598,15 +771,13 @@ function cerrarOverlay(){
   ov.classList.remove("show");
   document.body.style.overflow = "";
   try { localStorage.setItem("uqPondVisto", POND_VER); } catch(e){}
+  $("lc").focus({preventScroll:true});
 }
 $("ovOk").onclick = cerrarOverlay;
 $("verPond").onclick = mostrarOverlay;
+$("verPond2").onclick = mostrarOverlay;
 $("replayCalc").onclick = playCalcs;
-// delegación global: robusto ante overlays y coordenadas del driver
-document.addEventListener("click", e => {
-  if (e.target.closest && e.target.closest("#ovOk")) cerrarOverlay();
-  if (e.target.closest && e.target.closest("#verPond")) mostrarOverlay();
-});
+document.addEventListener("keydown", e => { if (e.key === "Escape" && ov.classList.contains("show")) cerrarOverlay(); });
 let visto = false;
 try { visto = localStorage.getItem("uqPondVisto") === POND_VER; } catch(e){}
 if (!visto) mostrarOverlay();
