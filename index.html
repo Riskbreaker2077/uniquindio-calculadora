@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2F5D46">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 <title>¿A qué puedo ingresar? — Universidad del Quindío</title>
 <meta name="description" content="Calcula tu puntaje ponderado del ICFES para los programas de la Universidad del Quindío y compara con los cierres oficiales.">
 <style>
@@ -22,17 +26,21 @@ body{
 }
 .wrap{max-width:880px;margin:0 auto;padding:0 20px}
 header{
-  background:var(--green); color:#fff; padding:34px 0 30px;
+  background:
+    radial-gradient(1100px 420px at 88% -30%, rgba(255,255,255,.10), transparent 62%),
+    radial-gradient(700px 300px at 6% 130%, rgba(15,30,22,.28), transparent 60%),
+    var(--green);
+  color:#fff; padding:38px 0 34px; border-bottom:3px solid #24463A;
 }
 header .wrap{display:flex;align-items:center;gap:18px}
 .escudo{width:64px;height:64px;border-radius:10px;background:rgba(255,255,255,.14);
   display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;
   color:rgba(255,255,255,.75);text-align:center;line-height:1.25;border:1px dashed rgba(255,255,255,.35)}
-h1{font-family:Georgia,'Times New Roman',serif;font-weight:600;font-size:clamp(24px,5vw,34px);line-height:1.12;letter-spacing:-.01em}
+h1{font-family:'Newsreader',Georgia,'Times New Roman',serif;font-weight:500;font-size:clamp(25px,5vw,37px);line-height:1.08;letter-spacing:-.02em}
 header p{opacity:.85;font-size:14.5px;margin-top:6px}
 main{padding:36px 0 20px}
 .card{background:#fff;border:1px solid var(--hair);border-radius:10px;padding:26px;margin-bottom:18px}
-.lead{font-family:Georgia,serif;font-size:17.5px;line-height:1.55;color:var(--ink)}
+.lead{font-family:'Newsreader',Georgia,serif;font-size:18.5px;line-height:1.5;color:var(--ink)}
 .hint{font-size:14px;color:var(--soft);margin-top:8px}
 label{display:block;font-weight:600;font-size:13.5px;letter-spacing:.02em;margin:14px 0 5px;color:var(--ink)}
 label small{font-weight:400;color:var(--soft)}
@@ -53,7 +61,7 @@ button:active{transform:scale(.98)}
 .note b{color:var(--green-tx)}
 #resultados{display:none}
 .resumen{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 6px}
-.chip{border-radius:999px;padding:7px 15px;font-size:13.5px;font-weight:600}
+.chip{border-radius:999px;padding:6px 13px;font-size:11.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
 .chip.g{background:var(--green-soft);color:var(--green-tx)}
 .chip.y{background:var(--amber-soft);color:var(--amber-tx)}
 .chip.r{background:var(--red-soft);color:var(--red-tx)}
@@ -61,11 +69,12 @@ button:active{transform:scale(.98)}
 .fbtn{border:1px solid var(--hair);background:#fff;color:var(--soft);border-radius:999px;padding:7px 15px;
   font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
 .fbtn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
-.prog{border:1px solid var(--hair);border-radius:10px;background:#fff;margin-bottom:10px;overflow:hidden}
+.prog{border:1px solid var(--hair);border-radius:10px;background:#fff;margin-bottom:10px;overflow:hidden;transition:box-shadow .2s ease,border-color .2s ease}
+.prog:hover{box-shadow:0 2px 8px rgba(0,0,0,.04);border-color:#D9D4C7}
 .prog-head{display:flex;align-items:center;gap:12px;padding:15px 18px;cursor:pointer}
 .dot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
 .dot.g{background:#3E8E5A}.dot.y{background:#D9A400}.dot.r{background:#C05B5B}
-.pname{font-weight:600;font-size:15.5px;flex:1}
+.pname{font-family:'Newsreader',Georgia,serif;font-weight:600;font-size:16.5px;line-height:1.25;flex:1}
 .pscore{text-align:right;flex-shrink:0}
 .pscore b{font-size:17px}
 .pscore span{display:block;font-size:11.5px;color:var(--soft);line-height:1.3}
@@ -87,7 +96,7 @@ button:active{transform:scale(.98)}
 .veredicto.r{background:var(--red-soft);color:var(--red-tx)}
 .aviso{background:var(--amber-soft);border-radius:8px;padding:13px 16px;font-size:13.5px;margin:16px 0}
 .aviso b{color:var(--amber-tx)}
-footer{border-top:1px solid var(--hair);margin-top:34px;padding:26px 0 34px;font-size:13.5px;color:var(--soft)}
+footer{border-top:1px solid var(--hair);margin-top:34px;padding:30px 0 38px;font-size:13.5px;color:var(--soft);background:linear-gradient(180deg,transparent,var(--bone2))}
 footer .escudo2{width:58px;height:58px;border-radius:9px;background:var(--bone2);border:1px dashed #CFC9BC;
   display:flex;align-items:center;justify-content:center;font-size:10px;color:#A39D90;text-align:center;line-height:1.2;margin-bottom:12px}
 footer b{color:var(--ink)}
@@ -97,6 +106,9 @@ footer b{color:var(--ink)}
   .pscore b{font-size:15.5px}
   .card{padding:20px 16px}
 }
+.reveal{opacity:0;transform:translateY(12px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){.reveal{transition:none;opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -266,7 +278,7 @@ function render(){
     if (filt !== "todos" && filt !== e) return;
     const ref = t.refP || "—";
     const delta = t.cRef == null ? null : t.score - t.cRef;
-    let head = '<div class="prog" data-k="' + esc(llave(t)) + '">' +
+    let head = '<div class="prog reveal" data-k="' + esc(llave(t)) + '">' +
       '<div class="prog-head"><span class="dot ' + (e==="sindato"?"y":e) + '"></span>' +
       '<div class="pname">' + esc(t.n) + (t.j ? ' <small style="color:var(--soft);font-weight:400">· ' + esc(t.j) + '</small>' : '') + '</div>' +
       '<div class="pscore"><b>' + t.score.toFixed(2).replace(".",",") + '</b>' +
@@ -312,6 +324,12 @@ function render(){
   // listeners
   document.querySelectorAll(".fbtn").forEach(b => b.onclick = () => { filt = b.dataset.f; render(); });
   document.querySelectorAll(".prog-head").forEach(h => h.onclick = () => h.parentElement.classList.toggle("open"));
+  // entrada escalonada
+  const iobs = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting){ en.target.classList.add("in"); iobs.unobserve(en.target); } }), {threshold:.08});
+  const progs2 = document.querySelectorAll("#lista .prog");
+  progs2.forEach((p,i) => { p.style.transitionDelay = Math.min(i*45, 420) + "ms"; iobs.observe(p); });
+  // fail-safe: nada queda oculto aunque no haya scroll/observer
+  setTimeout(() => progs2.forEach(p => p.classList.add("in")), 1600);
 }
 
 function leerInputs(){
@@ -338,6 +356,9 @@ $("calc").onclick = () => {
   lastScores = v;
   filt = "todos";
   $("resultados").style.display = "block";
+  const rc = document.getElementById("resultados").querySelectorAll(".card, .aviso");
+  rc.forEach(el => el.classList.add("reveal"));
+  requestAnimationFrame(() => requestAnimationFrame(() => rc.forEach(el => el.classList.add("in"))));
   render();
   $("resultados").scrollIntoView({behavior:"smooth"});
 };
