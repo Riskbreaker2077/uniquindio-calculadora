@@ -33,9 +33,8 @@ header{
   color:#fff; padding:38px 0 34px; border-bottom:3px solid #24463A;
 }
 header .wrap{display:flex;align-items:center;gap:18px}
-.escudo{width:64px;height:64px;border-radius:10px;background:rgba(255,255,255,.14);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;
-  color:rgba(255,255,255,.75);text-align:center;line-height:1.25;border:1px dashed rgba(255,255,255,.35)}
+.escudo{width:76px;height:76px;border-radius:14px;background:#fff;padding:7px;box-shadow:0 2px 10px rgba(0,0,0,.18);flex-shrink:0}
+.escudo img{width:100%;height:100%;object-fit:contain;display:block}
 h1{font-family:'Newsreader',Georgia,'Times New Roman',serif;font-weight:500;font-size:clamp(25px,5vw,37px);line-height:1.08;letter-spacing:-.02em}
 header p{opacity:.85;font-size:14.5px;margin-top:6px}
 main{padding:36px 0 20px}
@@ -97,8 +96,8 @@ button:active{transform:scale(.98)}
 .aviso{background:var(--amber-soft);border-radius:8px;padding:13px 16px;font-size:13.5px;margin:16px 0}
 .aviso b{color:var(--amber-tx)}
 footer{border-top:1px solid var(--hair);margin-top:34px;padding:30px 0 38px;font-size:13.5px;color:var(--soft);background:linear-gradient(180deg,transparent,var(--bone2))}
-footer .escudo2{width:58px;height:58px;border-radius:9px;background:var(--bone2);border:1px dashed #CFC9BC;
-  display:flex;align-items:center;justify-content:center;font-size:10px;color:#A39D90;text-align:center;line-height:1.2;margin-bottom:12px}
+footer .escudo2{width:148px;background:#fff;padding:9px;border-radius:12px;border:1px solid var(--hair);margin-bottom:12px}
+footer .escudo2 img{width:100%;display:block}
 footer b{color:var(--ink)}
 @media(max-width:560px){
   header .wrap{flex-direction:column;text-align:center;gap:10px}
@@ -136,13 +135,29 @@ footer b{color:var(--ink)}
 .ov-cta button{background:var(--green);width:100%;padding:16px 26px;font-size:16px}
 .ov-note{font-size:12.5px;color:var(--soft)}
 .linklike{background:none;border:none;color:var(--blue-tx);font-weight:600;font-size:13.5px;text-decoration:underline;cursor:pointer;padding:4px 0;font-family:inherit}
+a.linklike{display:inline-block}
+/* sección paso a paso */
+.sec-h{font-family:'Newsreader',Georgia,serif;font-weight:500;font-size:23px;letter-spacing:-.015em;margin-bottom:4px}
+.sec-sub{font-size:14px;color:var(--soft);margin-bottom:12px}
+.paso{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--hair)}
+.paso:last-of-type{border-bottom:none}
+.pnum{width:30px;height:30px;border-radius:50%;background:var(--green);color:#fff;font-weight:700;font-size:14.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.paso p{font-size:14.5px;line-height:1.55;color:var(--ink)}
+.cambia{margin-top:18px;background:var(--blue-soft);border-radius:9px;padding:16px 18px}
+.cambia h4{font-family:'Newsreader',Georgia,serif;font-size:18px;color:var(--blue-tx);margin-bottom:6px}
+.cambia p{font-size:14px;line-height:1.55}
+.timeline{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 10px}
+.tchip{background:#fff;border:1px solid var(--hair);border-radius:8px;padding:7px 12px;text-align:center}
+.tchip b{display:block;font-family:'Newsreader',Georgia,serif;font-size:16px}
+.tchip span{font-size:11px;color:var(--soft)}
+.cambia .pie{font-size:12.5px;color:var(--soft)}
 @media(max-width:560px){.ejemplo{grid-template-columns:1fr}.wname{width:130px}}
 </style>
 </head>
 <body>
 <header>
   <div class="wrap">
-    <div class="escudo">ESCUDO<br>AQUÍ</div>
+    <div class="escudo"><img src="escudo.png" alt="Escudo de la I. E. Santa Teresa de Jesús"></div>
     <div>
       <h1>¿A qué puedo ingresar en la Universidad del Quindío?</h1>
       <p>Ingresa tus puntajes del ICFES y descubre, con los ponderados oficiales, a qué programas podrías calificar.</p>
@@ -164,7 +179,7 @@ footer b{color:var(--ink)}
       <div class="wrow"><span class="wname">Inglés</span><span class="wtrack"><span class="wbar" style="width:67%"></span></span><span class="wpct">20%</span></div>
       <div class="wrow"><span class="wname">Matemáticas</span><span class="wtrack"><span class="wbar" style="width:50%"></span></span><span class="wpct">15%</span></div>
       <div class="wrow"><span class="wname">Ciencias naturales</span><span class="wtrack"><span class="wbar" style="width:27%"></span></span><span class="wpct">8%</span></div>
-      <p class="ov-p" style="margin-top:10px">En Medicina, en cambio, <b>Ciencias naturales vale 30%</b> y Sociales solo 15%. Es decir: <b>el mismo examen vale distinto según lo que quieras estudiar.</b></p>
+      <p class="ov-p" style="margin-top:10px">En Enfermería, en cambio, Sociales y Ciencias naturales valen <b>25% cada una</b>. Es decir: <b>el mismo examen vale distinto según lo que quieras estudiar.</b></p>
     </div>
 
     <div class="ov-step">
@@ -183,9 +198,9 @@ footer b{color:var(--ink)}
           <div class="ej-res g">✓ Su ponderado supera el cierre: entra compitiendo arriba</div>
         </div>
         <div class="ej-card">
-          <b>Medicina</b>
-          <div class="ej-line">80×20% + 55×15% + 75×15% + 50×30% + 70×15% = <b>64,8</b><br>El último admitido en 2026-1 sacó 91,2.</div>
-          <div class="ej-res r">✕ Mismo estudiante, mismo examen: lejos del cierre</div>
+          <b>Enfermería</b>
+          <div class="ej-line">80×17,5% + 55×17,5% + 75×25% + 50×25% + 70×15% = <b>65,4</b><br>El último admitido en 2026-1 sacó 75,25.</div>
+          <div class="ej-res r">✕ Mismo estudiante, mismo examen: no alcanzó el cierre</div>
         </div>
       </div>
       <p class="ov-p"><b>Nada cambió entre las dos columnas:</b> ni el examen, ni las notas, ni el esfuerzo. Lo único que cambió es la carrera. Por eso esta calculadora no te dice "tu puntaje": te dice <b>tu puntaje en cada programa</b>, comparado con su cierre real.</p>
@@ -220,6 +235,30 @@ footer b{color:var(--ink)}
     <div class="note" style="display:none" id="err"></div>
   </div>
 
+  <div class="card">
+    <div class="sec-h">Tu paso a paso para ingresar</div>
+    <div class="sec-sub">El proceso completo, en orden, tal como lo maneja la Oficina de Admisiones.</div>
+    <div class="paso"><span class="pnum">1</span><p><b>Presenta o valida tu ICFES.</b> Todo empieza por ahí: sin resultados vigentes del Saber 11 no hay inscripción. Si ya los tienes, tenlos a mano en PDF: la universidad los pide al momento de matrícula.</p></div>
+    <div class="paso"><span class="pnum">2</span><p><b>Explora y compara programas.</b> Usa esta calculadora: mira tu ponderado en varios programas (incluyendo jornadas diurna y nocturna — suelen cerrar distinto) y arma tu lista corta de 2 o 3 opciones realistas.</p></div>
+    <div class="paso"><span class="pnum">3</span><p><b>Compra el PIN de inscripción.</b> Se paga en línea o en bancos autorizados durante la ventana de inscripciones (para 2026-2 fue $142.700). Este PIN es tu llave para entrar al formulario — sin él no puedes inscribirte.</p></div>
+    <div class="paso"><span class="pnum">4</span><p><b>Llena el formulario y elige tu programa.</b> Dentro de la ventana, diligencia tus datos, sube lo solicitado y selecciona el programa al que aspiras. Verifica todo dos veces: los errores de datos son la causa más común de problemas posteriores.</p></div>
+    <div class="paso"><span class="pnum">5</span><p><b>Espera los resultados y simula tu cupo.</b> La universidad publica admitidos, listas y esperas por periodo. Compara tu puntaje ponderado con el cierre publicado y revisa si quedaste en alguna lista de espera.</p></div>
+    <div class="paso"><span class="pnum">6</span><p><b>Matricúlate a tiempo.</b> Si quedas admitido, paga la matrícula dentro de las fechas e inicia tu verificación de documentos (fotos, ICFES en PDF, diploma o acta). Quedarte fuera de la fecha de matrícula es perder el cupo.</p></div>
+
+    <div class="cambia">
+      <h4>Importante: el puntaje de corte cambia cada periodo</h4>
+      <p>No existe un puntaje mínimo fijo. Cada convocatoria, el cierre es el puntaje <b>del último admitido</b>: depende de qué tan preparados fueron los que se inscribieron contigo y de cuántos cupos tuvo el programa. El mismo programa puede ser fácil un semestre y exigente al siguiente.</p>
+      <div class="timeline">
+        <div class="tchip"><span>2024-2</span><b>34,2</b></div>
+        <div class="tchip"><span>2025-1</span><b>64,95</b></div>
+        <div class="tchip"><span>2025-2</span><b>53,75</b></div>
+        <div class="tchip"><span>2026-1</span><b>65,1</b></div>
+        <div class="tchip"><span>2026-2</span><b>42,3</b></div>
+      </div>
+      <p class="pie">Cierres reales de Ingeniería Electrónica en los últimos 5 periodos: casi el doble de diferencia entre el más bajo y el más alto. Por eso esta calculadora te muestra el rango completo de cada programa y no un solo número.</p>
+    </div>
+  </div>
+
   <div id="resultados">
     <div class="card" style="padding:22px">
       <p class="lead">Estos son tus resultados para el <b>último periodo con cierre publicado: 2026-2</b>.</p>
@@ -240,7 +279,7 @@ footer b{color:var(--ink)}
 
 <footer>
   <div class="wrap">
-    <div class="escudo2">ESCUDO<br>AQUÍ</div>
+    <div class="escudo2"><img src="escudo_full.png" alt="Escudo de la I. E. Santa Teresa de Jesús"></div>
     <p><b>I. E. Santa Teresa de Jesús</b> — Área de Ciencias Sociales</p>
     <p>Calculadora orientativa · ponderaciones oficiales de la Uniquindío (Res. ICFES 470/2017) y cierres 2024-2 → 2026-2 (Acuerdo 159/2023).</p>
     <p style="margin-top:8px"><button class="linklike" id="verPond" type="button">¿Cómo funciona el puntaje ponderado?</button></p>
