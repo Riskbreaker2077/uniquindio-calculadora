@@ -258,7 +258,6 @@ footer{background:var(--palma-dk);color:rgba(255,255,255,.8);margin-top:72px;pad
 .calc.play .cwbar{width:var(--w)}
 .calc.play .cprod,.calc.play .csum{opacity:1;transform:none}
 .small-note{font-size:14px;color:var(--muted)}
-.replay{background:none;border:none;color:var(--palma);font-weight:650;font-size:14.5px;text-decoration:underline;text-underline-offset:3px;padding:6px 0;margin-bottom:8px}
 .lecciones{display:grid;gap:10px;margin-top:4px}
 .lecciones p{display:flex;gap:12px;font-size:16px;line-height:1.55}
 .lecciones p > span:first-child{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--sol);color:var(--palma-dk);font-weight:800;display:grid;place-items:center;font-size:14px}
@@ -454,7 +453,6 @@ footer{background:var(--palma-dk);color:rgba(255,255,255,.8);margin-top:72px;pad
         </div>
       </div>
       <p class="small-note">La barra verde muestra cuánto <b>pesa</b> cada área en esa carrera. El número de la derecha es lo que esa área <b>aporta</b>: tu nota por su peso. Abajo, todo sumado.</p>
-      <button class="replay" id="replayCalc" type="button">↻ Ver la animación de nuevo</button>
       <p class="ov-p"><b>Nada cambió entre las dos columnas:</b> ni el examen, ni las notas, ni el esfuerzo. Solo cambió la carrera. Por eso esta calculadora no te da «tu puntaje»: te da <b>tu puntaje en cada programa</b>, comparado con su cierre real.</p>
     </div>
 
@@ -776,7 +774,6 @@ function cerrarOverlay(){
 $("ovOk").onclick = cerrarOverlay;
 $("verPond").onclick = mostrarOverlay;
 $("verPond2").onclick = mostrarOverlay;
-$("replayCalc").onclick = playCalcs;
 document.addEventListener("keydown", e => { if (e.key === "Escape" && ov.classList.contains("show")) cerrarOverlay(); });
 let visto = false;
 try { visto = localStorage.getItem("uqPondVisto") === POND_VER; } catch(e){}
