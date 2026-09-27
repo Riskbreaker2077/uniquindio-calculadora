@@ -109,6 +109,33 @@ footer b{color:var(--ink)}
 .reveal{opacity:0;transform:translateY(12px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
 .reveal.in{opacity:1;transform:none}
 @media (prefers-reduced-motion: reduce){.reveal{transition:none;opacity:1;transform:none}}
+/* pantalla explicación del ponderado */
+#overlay{position:fixed;inset:0;background:var(--bone);z-index:60;overflow-y:auto;display:none}
+#overlay.show{display:block}
+.ov-wrap{max-width:720px;margin:0 auto;padding:46px 22px 60px}
+.kicker{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green-tx);margin-bottom:14px}
+.ov-h{font-family:'Newsreader',Georgia,serif;font-weight:500;font-size:clamp(27px,5.5vw,40px);line-height:1.1;letter-spacing:-.02em;margin-bottom:16px}
+.ov-p{font-size:16px;line-height:1.65;color:var(--ink);margin-bottom:12px}
+.ov-step{border-left:2px solid var(--green);padding:2px 0 2px 18px;margin:28px 0}
+.ov-step h3{font-family:'Newsreader',Georgia,serif;font-size:20.5px;font-weight:600;margin-bottom:8px;letter-spacing:-.01em}
+.wrow{display:flex;align-items:center;gap:10px;margin:7px 0}
+.wname{width:168px;font-size:13.5px;color:var(--soft);flex-shrink:0}
+.wbar{height:14px;border-radius:3px;background:var(--green);opacity:.85}
+.wpct{font-size:12.5px;font-weight:700;color:var(--ink)}
+.formula{font-family:'Newsreader',Georgia,serif;font-style:italic;font-size:16.5px;line-height:1.5;background:#fff;border:1px solid var(--hair);border-radius:8px;padding:14px 18px;margin:10px 0}
+.ejemplo{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.ej-card{border:1px solid var(--hair);border-radius:10px;padding:16px;background:#fff}
+.ej-card>b{font-family:'Newsreader',Georgia,serif;font-size:16.5px;font-weight:600}
+.ej-line{font-size:13.5px;color:var(--soft);margin-top:6px;line-height:1.5}
+.ej-res{margin-top:10px;font-size:13.5px;font-weight:700;border-radius:7px;padding:8px 11px}
+.ej-res.g{background:var(--green-soft);color:var(--green-tx)}
+.ej-res.r{background:var(--red-soft);color:var(--red-tx)}
+.ov-cta{position:sticky;bottom:0;margin-top:28px;display:flex;flex-direction:column;gap:12px;align-items:stretch;
+  background:linear-gradient(180deg,rgba(251,250,247,0),var(--bone) 34%);padding:20px 0 6px}
+.ov-cta button{background:var(--green);width:100%;padding:16px 26px;font-size:16px}
+.ov-note{font-size:12.5px;color:var(--soft)}
+.linklike{background:none;border:none;color:var(--blue-tx);font-weight:600;font-size:13.5px;text-decoration:underline;cursor:pointer;padding:4px 0;font-family:inherit}
+@media(max-width:560px){.ejemplo{grid-template-columns:1fr}.wname{width:130px}}
 </style>
 </head>
 <body>
@@ -121,6 +148,59 @@ footer b{color:var(--ink)}
     </div>
   </div>
 </header>
+
+<div id="overlay">
+  <div class="ov-wrap">
+    <div class="kicker">Antes de empezar · lectura de 2 minutos</div>
+    <div class="ov-h">A la universidad no se entra con el puntaje total: se entra con el ponderado.</div>
+    <p class="ov-p">Seguramente conoces tu <b>puntaje global del ICFES</b> (esa nota de 0 a 500). Es la suma de tus cinco áreas, y sirve para muchísimas cosas — pero la Universidad del Quindío <b>no admite con ese número</b>. Lo que hace es una operación distinta, llamada <b>puntaje ponderado</b>, y el resultado cambia según la carrera que elijas.</p>
+
+    <div class="ov-step">
+      <h3>1 · Cada carrera le pone "peso" distinto a tus áreas</h3>
+      <p class="ov-p">Cada programa decide qué materias le importan más. Por ejemplo, así pondera <b>Comunicación Social – Periodismo</b>:</p>
+      <div class="wrow"><span class="wname">Lectura crítica</span><span class="wbar" style="width:100%"></span><span class="wpct">30%</span></div>
+      <div class="wrow"><span class="wname">Sociales y ciudadanas</span><span class="wbar" style="width:90%"></span><span class="wpct">27%</span></div>
+      <div class="wrow"><span class="wname">Inglés</span><span class="wbar" style="width:67%"></span><span class="wpct">20%</span></div>
+      <div class="wrow"><span class="wname">Matemáticas</span><span class="wbar" style="width:50%"></span><span class="wpct">15%</span></div>
+      <div class="wrow"><span class="wname">Ciencias naturales</span><span class="wbar" style="width:27%"></span><span class="wpct">8%</span></div>
+      <p class="ov-p" style="margin-top:10px">En Medicina, en cambio, <b>Ciencias naturales vale 30%</b> y Sociales solo 15%. Es decir: <b>el mismo examen vale distinto según lo que quieras estudiar.</b></p>
+    </div>
+
+    <div class="ov-step">
+      <h3>2 · El cálculo: cada área × su peso, y se suma todo</h3>
+      <div class="formula">Puntaje de ingreso = (Lectura crítica × peso) + (Matemáticas × peso) + (Sociales × peso) + (Ciencias naturales × peso) + (Inglés × peso)</div>
+      <p class="ov-p">El resultado va de 0 a 100, y es <b>tu puntaje para esa carrera en concreto</b>. No existe "un solo puntaje tuyo": tienes uno por cada programa al que aspiras.</p>
+    </div>
+
+    <div class="ov-step">
+      <h3>3 · Un ejemplo con números reales</h3>
+      <p class="ov-p">Un estudiante saca <b>80 en Lectura crítica, 55 en Matemáticas, 75 en Sociales, 50 en Ciencias naturales y 70 en Inglés</b> — un global de 330/500, absolutamente respetable.</p>
+      <div class="ejemplo">
+        <div class="ej-card">
+          <b>Comunicación Social – Periodismo</b>
+          <div class="ej-line">80×30% + 55×15% + 75×27% + 50×8% + 70×20% = <b>70,5</b><br>El último admitido en 2026-2 sacó 58,75.</div>
+          <div class="ej-res g">✓ Su ponderado supera el cierre: entra compitiendo arriba</div>
+        </div>
+        <div class="ej-card">
+          <b>Medicina</b>
+          <div class="ej-line">80×20% + 55×15% + 75×15% + 50×30% + 70×15% = <b>64,8</b><br>El último admitido en 2026-1 sacó 91,2.</div>
+          <div class="ej-res r">✕ Mismo estudiante, mismo examen: lejos del cierre</div>
+        </div>
+      </div>
+      <p class="ov-p"><b>Nada cambió entre las dos columnas:</b> ni el examen, ni las notas, ni el esfuerzo. Lo único que cambió es la carrera. Por eso esta calculadora no te dice "tu puntaje": te dice <b>tu puntaje en cada programa</b>, comparado con su cierre real.</p>
+    </div>
+
+    <div class="ov-step">
+      <h3>4 · Lo que esto significa para ti</h3>
+      <p class="ov-p">① Tu global 0–500 no define tu futuro: <b>una estrategia inteligente vale tanto como 40 puntos</b>. &nbsp;② Antes de descartar una carrera, <b>calcula tu ponderado en ella</b> — tal vez estás más cerca de lo que crees. &nbsp;③ Si un área tuya es fuerte, busca los programas donde <b>esa área pesa más</b>: ahí tu examen rinde al máximo.</p>
+    </div>
+
+    <div class="ov-cta">
+      <button id="ovOk" type="button">Entendido — calcular mis opciones</button>
+      <span class="ov-note">Podrás volver a leer esta explicación cuando quieras, con el enlace «¿Cómo funciona el puntaje ponderado?» al pie de la página.</span>
+    </div>
+  </div>
+</div>
 
 <main class="wrap">
   <div class="card">
@@ -162,6 +242,7 @@ footer b{color:var(--ink)}
     <div class="escudo2">ESCUDO<br>AQUÍ</div>
     <p><b>I. E. Santa Teresa de Jesús</b> — Área de Ciencias Sociales</p>
     <p>Calculadora orientativa · ponderaciones oficiales de la Uniquindío (Res. ICFES 470/2017) y cierres 2024-2 → 2026-2 (Acuerdo 159/2023).</p>
+    <p style="margin-top:8px"><button class="linklike" id="verPond" type="button">¿Cómo funciona el puntaje ponderado?</button></p>
     <p style="margin-top:10px">By Camilo Moreno</p>
   </div>
 </footer>
@@ -370,6 +451,26 @@ $("reset").onclick = () => {
   lastScores = null;
   filt = "todos";
 };
+
+// ---- pantalla explicación del ponderado
+const ov = $("overlay");
+const POND_VER = "2026-09-27";
+function mostrarOverlay(){ ov.classList.add("show"); ov.scrollTop = 0; document.body.style.overflow = "hidden"; }
+function cerrarOverlay(){
+  ov.classList.remove("show");
+  document.body.style.overflow = "";
+  try { localStorage.setItem("uqPondVisto", POND_VER); } catch(e){}
+}
+$("ovOk").onclick = cerrarOverlay;
+$("verPond").onclick = mostrarOverlay;
+// delegación global: robusto ante overlays y coordenadas del driver
+document.addEventListener("click", e => {
+  if (e.target.closest && e.target.closest("#ovOk")) cerrarOverlay();
+  if (e.target.closest && e.target.closest("#verPond")) mostrarOverlay();
+});
+let visto = false;
+try { visto = localStorage.getItem("uqPondVisto") === POND_VER; } catch(e){}
+if (!visto) mostrarOverlay();
 </script>
 </body>
 </html>
