@@ -128,6 +128,29 @@ footer b{color:var(--ink)}
 .ej-card>b{font-family:'Newsreader',Georgia,serif;font-size:16.5px;font-weight:600}
 .ej-line{font-size:13.5px;color:var(--soft);margin-top:6px;line-height:1.5}
 .ej-res{margin-top:10px;font-size:13.5px;font-weight:700;border-radius:7px;padding:8px 11px}
+/* construcción animada del ponderado */
+.calc{margin-top:12px;border-top:1px solid var(--hair);padding-top:10px}
+.crow{display:grid;grid-template-columns:1fr 52px 48px;gap:8px;align-items:center;padding:5px 0}
+.carea{min-width:0}
+.cname{display:block;font-size:12.5px;color:var(--ink);line-height:1.2}
+.cw{display:flex;align-items:center;gap:6px;margin-top:3px}
+.cwtrack{flex:1;height:6px;background:var(--bone2);border-radius:3px;overflow:hidden}
+.cwbar{display:block;height:100%;width:0;background:var(--green);border-radius:3px;transition:width .7s cubic-bezier(.16,1,.3,1)}
+.cwpct{font-size:11px;font-weight:700;color:var(--soft);width:34px;text-align:right;flex-shrink:0}
+.cscore{font-size:13.5px;text-align:right;color:var(--soft);font-variant-numeric:tabular-nums}
+.cprod{font-size:14.5px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums;
+  opacity:0;transform:translateY(4px);transition:opacity .4s ease,transform .4s ease;transition-delay:calc(var(--i)*.13s + .4s)}
+.csum{display:flex;justify-content:space-between;align-items:baseline;margin-top:8px;padding-top:9px;border-top:1px dashed var(--hair);
+  opacity:0;transform:translateY(4px);transition:opacity .5s ease,transform .5s ease;transition-delay:1.15s}
+.csum span{font-size:12.5px;color:var(--soft)}
+.ctotal{font-family:'Newsreader',Georgia,serif;font-size:26px;font-weight:600;color:var(--green-tx);line-height:1}
+.calc.play .cwbar{width:var(--w)}
+.calc.play .cprod{opacity:1;transform:none}
+.calc.play .csum{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  .calc .cwbar{width:var(--w)!important;transition:none}
+  .calc .cprod,.calc .csum{opacity:1!important;transform:none!important}
+}
 .ej-res.g{background:var(--green-soft);color:var(--green-tx)}
 .ej-res.r{background:var(--red-soft);color:var(--red-tx)}
 .ov-cta{position:sticky;bottom:0;margin-top:28px;display:flex;flex-direction:column;gap:12px;align-items:stretch;
@@ -190,19 +213,67 @@ a.linklike{display:inline-block}
 
     <div class="ov-step">
       <h3>3 · Un ejemplo con números reales</h3>
-      <p class="ov-p">Un estudiante saca <b>80 en Lectura crítica, 55 en Matemáticas, 75 en Sociales, 50 en Ciencias naturales y 70 en Inglés</b> — un global de 330/500, absolutamente respetable.</p>
+      <p class="ov-p">Un estudiante saca <b>80 en Lectura crítica, 55 en Matemáticas, 75 en Sociales, 50 en Ciencias naturales y 70 en Inglés</b> — un global de 330/500, absolutamente respetable. Mira cómo se construye su puntaje en dos carreras:</p>
       <div class="ejemplo">
         <div class="ej-card">
           <b>Comunicación Social – Periodismo</b>
-          <div class="ej-line">80×30% + 55×15% + 75×27% + 50×8% + 70×20% = <b>70,5</b><br>El último admitido en 2026-2 sacó 58,75.</div>
+          <div class="calc" data-total="70.5">
+            <div class="crow" style="--i:0">
+              <div class="carea"><span class="cname">Lectura crítica</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:100%"></span></span><span class="cwpct">30%</span></div></div>
+              <div class="cscore">80</div><div class="cprod">24,0</div>
+            </div>
+            <div class="crow" style="--i:1">
+              <div class="carea"><span class="cname">Matemáticas</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:50%"></span></span><span class="cwpct">15%</span></div></div>
+              <div class="cscore">55</div><div class="cprod">8,25</div>
+            </div>
+            <div class="crow" style="--i:2">
+              <div class="carea"><span class="cname">Sociales y ciudadanas</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:90%"></span></span><span class="cwpct">27%</span></div></div>
+              <div class="cscore">75</div><div class="cprod">20,25</div>
+            </div>
+            <div class="crow" style="--i:3">
+              <div class="carea"><span class="cname">Ciencias naturales</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:27%"></span></span><span class="cwpct">8%</span></div></div>
+              <div class="cscore">50</div><div class="cprod">4,0</div>
+            </div>
+            <div class="crow" style="--i:4">
+              <div class="carea"><span class="cname">Inglés</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:67%"></span></span><span class="cwpct">20%</span></div></div>
+              <div class="cscore">70</div><div class="cprod">14,0</div>
+            </div>
+            <div class="csum"><span>Suma de lo que aporta cada área</span><span class="ctotal" data-target="70.5">0,0</span></div>
+          </div>
+          <div class="ej-line">El último admitido en 2026-2 sacó 58,75.</div>
           <div class="ej-res g">✓ Su ponderado supera el cierre: entra compitiendo arriba</div>
         </div>
         <div class="ej-card">
           <b>Enfermería</b>
-          <div class="ej-line">80×17,5% + 55×17,5% + 75×25% + 50×25% + 70×15% = <b>65,4</b><br>El último admitido en 2026-1 sacó 75,25.</div>
+          <div class="calc" data-total="65.4">
+            <div class="crow" style="--i:0">
+              <div class="carea"><span class="cname">Lectura crítica</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:58%"></span></span><span class="cwpct">17,5%</span></div></div>
+              <div class="cscore">80</div><div class="cprod">14,0</div>
+            </div>
+            <div class="crow" style="--i:1">
+              <div class="carea"><span class="cname">Matemáticas</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:58%"></span></span><span class="cwpct">17,5%</span></div></div>
+              <div class="cscore">55</div><div class="cprod">9,63</div>
+            </div>
+            <div class="crow" style="--i:2">
+              <div class="carea"><span class="cname">Sociales y ciudadanas</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:83%"></span></span><span class="cwpct">25%</span></div></div>
+              <div class="cscore">75</div><div class="cprod">18,75</div>
+            </div>
+            <div class="crow" style="--i:3">
+              <div class="carea"><span class="cname">Ciencias naturales</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:83%"></span></span><span class="cwpct">25%</span></div></div>
+              <div class="cscore">50</div><div class="cprod">12,5</div>
+            </div>
+            <div class="crow" style="--i:4">
+              <div class="carea"><span class="cname">Inglés</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:50%"></span></span><span class="cwpct">15%</span></div></div>
+              <div class="cscore">70</div><div class="cprod">10,5</div>
+            </div>
+            <div class="csum"><span>Suma de lo que aporta cada área</span><span class="ctotal" data-target="65.4">0,0</span></div>
+          </div>
+          <div class="ej-line">El último admitido en 2026-1 sacó 75,25.</div>
           <div class="ej-res r">✕ Mismo estudiante, mismo examen: no alcanzó el cierre</div>
         </div>
       </div>
+      <p class="ov-p" style="font-size:13px;color:var(--soft)">La barra verde muestra cuánto <b>pesa</b> cada área en esa carrera (más larga = más pesa). El número de la derecha es lo que esa área <b>aporta</b> a tu puntaje: tu nota × su peso. Abajo, todo sumado.</p>
+      <button class="linklike" id="replayCalc" type="button">↻ Ver la animación de nuevo</button>
       <p class="ov-p"><b>Nada cambió entre las dos columnas:</b> ni el examen, ni las notas, ni el esfuerzo. Lo único que cambió es la carrera. Por eso esta calculadora no te dice "tu puntaje": te dice <b>tu puntaje en cada programa</b>, comparado con su cierre real.</p>
     </div>
 
@@ -495,7 +566,34 @@ $("reset").onclick = () => {
 // ---- pantalla explicación del ponderado
 const ov = $("overlay");
 const POND_VER = "2026-09-27";
-function mostrarOverlay(){ ov.classList.add("show"); ov.scrollTop = 0; document.body.style.overflow = "hidden"; }
+function playCalcs(){
+  const calcs = document.querySelectorAll(".calc");
+  calcs.forEach(c => { c.classList.remove("play"); c.querySelector(".ctotal").textContent = "0,0"; });
+  const reducido = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reducido){
+    calcs.forEach(c => { c.classList.add("play"); c.querySelector(".ctotal").textContent = parseFloat(c.dataset.total).toFixed(1).replace(".", ","); });
+    return;
+  }
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    calcs.forEach(c => {
+      c.classList.add("play");
+      const target = parseFloat(c.dataset.total);
+      const el = c.querySelector(".ctotal");
+      const t0 = performance.now(), dur = 1100, delay = 1050;
+      function tick(now){
+        const p = Math.min(1, (now - t0 - delay) / dur);
+        if (p > 0){
+          const v = target * (1 - Math.pow(1 - p, 3));
+          el.textContent = v.toFixed(1).replace(".", ",");
+        }
+        if (p < 1) requestAnimationFrame(tick);
+        else el.textContent = target.toFixed(1).replace(".", ",");
+      }
+      requestAnimationFrame(tick);
+    });
+  }));
+}
+function mostrarOverlay(){ ov.classList.add("show"); ov.scrollTop = 0; document.body.style.overflow = "hidden"; playCalcs(); }
 function cerrarOverlay(){
   ov.classList.remove("show");
   document.body.style.overflow = "";
@@ -503,6 +601,7 @@ function cerrarOverlay(){
 }
 $("ovOk").onclick = cerrarOverlay;
 $("verPond").onclick = mostrarOverlay;
+$("replayCalc").onclick = playCalcs;
 // delegación global: robusto ante overlays y coordenadas del driver
 document.addEventListener("click", e => {
   if (e.target.closest && e.target.closest("#ovOk")) cerrarOverlay();
