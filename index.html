@@ -149,6 +149,7 @@ h1{font-weight:780;font-stretch:78%;font-size:clamp(36px,10.5vw,76px);line-heigh
 .pill.y{background:var(--mid-bg);color:var(--mid)}
 .pill.r{background:var(--no-bg);color:var(--no)}
 .pill.s{background:var(--paper);color:var(--muted)}
+.pjorn{color:var(--muted);font-weight:600;font-size:.88em;white-space:nowrap}
 .ruler{position:relative;height:26px;display:block;grid-column:1 / -1;grid-row:2}
 .r-track{position:absolute;left:0;right:0;top:50%;height:4px;margin-top:-2px;background:#E4EAE5;border-radius:2px}
 .r-tick{position:absolute;top:50%;width:1px;height:8px;margin-top:-4px;background:#C9D3CC}
@@ -397,7 +398,7 @@ footer{background:var(--palma-dk);color:rgba(255,255,255,.8);margin-top:56px;pad
 <main>
   <section id="resultados" class="wrap" aria-live="polite">
     <h2 class="sec-title">Tus opciones en la Uniquindío</h2>
-    <p class="sec-sub">Comparado con el cierre del último periodo publicado (2026-2). Si un programa no abrió ese periodo, usamos su cierre más reciente. Toca un programa para ver cómo se calcula y su historial.</p>
+    <p class="sec-sub">Comparado con el cierre del ciclo 2027-1 (referencia: 2026-1, el último disponible del mismo ciclo). Si un programa no abrió ese ciclo, usamos su cierre más comparable. Toca un programa para ver cómo se calcula y su historial.</p>
 
     <div class="tiles" id="tiles"></div>
 
@@ -462,6 +463,7 @@ footer{background:var(--palma-dk);color:rgba(255,255,255,.8);margin-top:56px;pad
       <div class="wrow"><span class="wname">Matemáticas</span><span class="wtrack"><span class="wbar" style="width:50%"></span></span><span class="wpct">15%</span></div>
       <div class="wrow"><span class="wname">Ciencias naturales</span><span class="wtrack"><span class="wbar" style="width:27%"></span></span><span class="wpct">8%</span></div>
       <p class="ov-p">En Enfermería, en cambio, Sociales y Ciencias naturales valen <b>25% cada una</b>. Es decir: <b>el mismo examen vale distinto según lo que quieras estudiar en la Uniquindío.</b></p>
+      <p class="ov-p" style="margin-top:8px; font-size:14.5px">📝 Verás algunos programas repetidos (Diurna / Nocturna / CAT): <b>son la misma carrera en horarios distintos</b>, y cada jornada tiene su propio puntaje de corte y sus propios cupos.</p>
     </div>
 
     <div class="ov-step">
@@ -484,7 +486,7 @@ footer{background:var(--palma-dk);color:rgba(255,255,255,.8);margin-top:56px;pad
             <div class="crow" style="--i:4"><div class="carea"><span class="cname">Inglés</span><div class="cw"><span class="cwtrack"><span class="cwbar" style="--w:67%"></span></span><span class="cwpct">20%</span></div></div><div class="cscore">70</div><div class="cprod">14,0</div></div>
             <div class="csum"><span>Suma de lo que aporta cada área</span><span class="ctotal" data-target="70.5">0,0</span></div>
           </div>
-          <div class="ej-line">El último admitido en 2026-2 sacó 58,75.</div>
+          <div class="ej-line">El último admitido en 2026-1 (ciclo de referencia para 2027-1) sacó 57,49.</div>
           <div class="ej-res g">✓ Supera el cierre: entra compitiendo arriba</div>
         </div>
         <div class="ej-card">
@@ -578,6 +580,10 @@ const DATA = [
 const PER = ["2024-2","2025-1","2025-2","2026-1","2026-2"];
 const LAST = "2026-2";
 const LASTI = PER.indexOf(LAST);
+// Los estudiantes de ahora se presentan para 2027-1: el ciclo comparable es el -1 más reciente
+// (2026-1), no el último publicado (2026-2): los cierres de primer y segundo semestre no se parecen.
+const OBJETIVO = "2027-1";
+const REF_IDX = PER.map((p, i) => i).filter(i => PER[i].slice(-2) === OBJETIVO.slice(-2)).reverse();
 const AREAS = ["Lectura crítica","Matemáticas","Sociales y ciudadanas","Ciencias naturales","Inglés"];
 const IDS = ["lc","mat","soc","nat","ing"];
 const TL = 3; // banda "al límite": hasta 3 puntos por debajo del cierre
@@ -598,8 +604,10 @@ const clamp = v => Math.max(0, Math.min(100, v));
 
 function calcular(s){
   return DATA.map(t => {
+    // referencia = cierre del ciclo al que aspira el estudiante (2027-1 → mismo ciclo -1),
+    // cayendo a periodos anteriores del mismo ciclo solo si ese no tiene dato.
     let cRef = null, refP = null;
-    for (let i = LASTI; i >= 0; i--){ if (t.c[i] != null){ cRef = t.c[i]; refP = PER[i]; break; } }
+    for (const i of REF_IDX){ if (t.c[i] != null){ cRef = t.c[i]; refP = PER[i]; break; } }
     const vals = t.c.filter(v => v != null);
     return {...t, score: t.p.reduce((a,w,i)=>a + w*s[i], 0), cRef, refP,
       cMin: vals.length ? Math.min(...vals) : null, cMax: vals.length ? Math.max(...vals) : null};
@@ -689,9 +697,8 @@ function render(){
                   : "Sin cierre reciente";
     let h = '<div class="prog ' + (e==="sindato"?"":e) + (open?" open":"") + '" data-k="' + esc(k) + '">' +
       '<button type="button" class="prog-head" aria-expanded="' + open + '">' +
-        '<span class="pn"><span class="pname">' + esc(t.n) + '</span><span class="pmeta">' +
+        '<span class="pn"><span class="pname">' + esc(t.n) + (t.j ? ' <span class="pjorn">· ' + esc(t.j) + '</span>' : '') + '</span><span class="pmeta">' +
           '<span class="pill ' + (e==="sindato"?"s":e) + '">' + pillTxt + '</span>' +
-          (t.j ? '<span class="pill j">' + esc(t.j) + '</span>' : '') +
         '</span></span>' +
         regla(t) +
         '<span class="pscore"><b>' + fmt(t.score) + '</b><small>' + (t.cRef==null ? "sin cierre publicado" : "cierre " + fmt(t.cRef) + " (" + t.refP + ")") + '</small></span>' +
